@@ -9,7 +9,21 @@ import (
 const PI = math.Pi
 
 // 全局变量的声明和赋值
-var name = "gopher"
+var name = "sam"
+
+// 定义多个变量, 默认值：0
+var identifier, age int
+
+// 定义字符串变量，默认值：空字符串
+var user string
+
+// 定义布尔变量，默认值：false
+var _boo bool
+
+
+user_age := 1  // 为什么会报错？？
+
+// 其他类型默认值：nil
 
 // 一般类型声明
 type newType int
@@ -25,6 +39,12 @@ func main() {
 	fmt.Println("golang")
 	fmt.Println("good good study, day day up")
 	fmt.Printf("math pi = %f", PI)
-	fmt.Println()
+	fmt.Println(name)
+	fmt.Println("/************************/")
+	fmt.Println(identifier)
+	fmt.Println(age)
+	fmt.Printf("user:%s", user)
+	fmt.Println(_boo)
+	fmt.Println(user_age)
 
 }
