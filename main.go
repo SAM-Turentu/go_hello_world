@@ -20,8 +20,7 @@ var user string
 // 定义布尔变量，默认值：false
 var _boo bool
 
-
-user_age := 1  // 为什么会报错？？
+// user_age := 1  // 只能存在于函数内，全局变量无法使用
 
 // 其他类型默认值：nil
 
@@ -45,6 +44,9 @@ func main() {
 	fmt.Println(age)
 	fmt.Printf("user:%s", user)
 	fmt.Println(_boo)
+
+	user_age := 18 // 只能存在于函数内，全局变量无法使用
+
 	fmt.Println(user_age)
 
 }
