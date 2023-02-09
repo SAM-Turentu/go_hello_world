@@ -109,6 +109,13 @@ func main() {
 	fmt.Printf("data_b=%d\n", data_b)
 	fmt.Printf("data_b()=%d\n", data_b())
 
+	fmt.Println("**************函数方法**************")
+	circle := Circle{}
+	circle.radius = 10
+	area := circle.getArea()
+	fmt.Printf("圆的面积：%f\n", area)
+	fmt.Printf("圆的周长：%f\n", circle.getLen())
+
 }
 
 // 函数放在调用函数的前后没有关系
@@ -123,4 +130,20 @@ func data() func() int {
 		i++
 		return i
 	}
+}
+
+// 定义一个结构体
+type Circle struct {
+	radius float64
+}
+
+// 类似于 类方法;
+// 圆面积方法
+func (c Circle) getArea() float64 {
+	return c.radius * c.radius * PI
+}
+
+// 圆周长
+func (c Circle) getLen() float64 {
+	return 2 * PI * c.radius
 }
