@@ -187,7 +187,7 @@ func (r Rectangle) getArea() float64 {
 
 //endregion
 
-// 定义一个结构体
+// region 定义一个结构体
 type Circle struct {
 	radius float64
 }
@@ -202,3 +202,5 @@ func (c Circle) getArea() float64 {
 func (c Circle) getLen() float64 {
 	return 2 * PI * c.radius
 }
+
+//endregion
