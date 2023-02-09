@@ -97,17 +97,37 @@ func main() {
 	//	sum++
 	//}
 
-	strings := []string{"google", "runoob"}
-	fmt.Printf("strings=%s\n", strings)
-	for i, val := range strings {
-		fmt.Printf("i=%d, val=%s\n", i, val)
-	}
-	data_a := read_data()
-	fmt.Printf("data_a=%d\n", data_a)
+	//strings := []string{"google", "runoob"}
+	//fmt.Printf("strings=%s\n", strings)
+	//for i, val := range strings {
+	//	fmt.Printf("i=%d, val=%s\n", i, val)
+	//}
+	//data_a := read_data()
+	//fmt.Printf("data_a=%d\n", data_a)
+	//
+	//data_b := data()
+	//fmt.Printf("data_b=%d\n", data_b)
+	//fmt.Printf("data_b()=%d\n", data_b())
 
-	data_b := data()
-	fmt.Printf("data_b=%d\n", data_b)
-	fmt.Printf("data_b()=%d\n", data_b())
+	//region 调用其他文件方法，注意配置问题，不然无法运行调试
+	a := PrintHello()
+	fmt.Println(a)
+	fmt.Println("***************************")
+	hello()
+	//endregion
+
+	//region 矩形结构体和方法
+	//r := Rectangle{}
+	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
+	//fmt.Println("******************************")
+	//r.length = 20
+	//r.width = 10
+	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
+	//fmt.Println("******************************")
+	//r.setLength(10)
+	//r.setWidth(5)
+	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
+	//endregion
 
 }
 
@@ -124,3 +144,38 @@ func data() func() int {
 		return i
 	}
 }
+
+//region 矩形结构体和矩形的方法
+
+// 定义一个矩形的结构体
+type Rectangle struct {
+	length float64
+	width  float64
+}
+
+// 获取矩形的长
+func (r Rectangle) getLength() float64 {
+	return r.length
+}
+
+// 设置矩形的长
+func (r *Rectangle) setLength(length float64) {
+	r.length = length
+}
+
+// //获取矩形的宽
+func (r Rectangle) getWidth() float64 {
+	return r.width
+}
+
+// 设置矩形的宽
+func (r *Rectangle) setWidth(width float64) {
+	r.width = width
+}
+
+// 矩形面积
+func (r Rectangle) getArea() float64 {
+	return r.length * r.width
+}
+
+//endregion
