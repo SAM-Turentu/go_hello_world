@@ -110,10 +110,10 @@ func main() {
 	//fmt.Printf("data_b()=%d\n", data_b())
 
 	//region 调用其他文件方法，注意配置问题，不然无法运行调试
-	a := PrintHello()
-	fmt.Println(a)
-	fmt.Println("***************************")
-	hello()
+	//a := PrintHello()
+	//fmt.Println(a)
+	//fmt.Println("***************************")
+	//hello()
 	//endregion
 
 	//region 矩形结构体和方法
@@ -129,12 +129,129 @@ func main() {
 	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
 	//endregion
 
-	fmt.Println("**************函数方法**************")
-	circle := Circle{}
-	circle.radius = 10
-	area := circle.getArea()
-	fmt.Printf("圆的面积：%f\n", area)
-	fmt.Printf("圆的周长：%f\n", circle.getLen())
+	//region 圆的结构体
+	//fmt.Println("**************函数方法**************")
+	//circle := Circle{}
+	//circle.radius = 10
+	//area := circle.getArea()
+	//fmt.Printf("圆的面积：%f\n", area)
+	//fmt.Printf("圆的周长：%f\n", circle.getLen())
+	//endregion
+
+	//region 一维数组
+	//fmt.Println("**************一维数组**************")
+	//var data_list []float64
+	//fmt.Println(data_list)
+	//fmt.Println(len(data_list))
+	////向数组中添加元素
+	//data_list = append(data_list, 32.4)
+	//fmt.Println(data_list)
+	//fmt.Println(len(data_list))
+	//
+	////一维数组遍历
+	//strings := []string{"google", "runoob"}
+	//fmt.Printf("strings=%s\n", strings)
+	//for i, val := range strings {
+	//	fmt.Printf("i=%d, val=%s\n", i, val)
+	//}
+	//
+	//删除一维数组中的元素
+
+	//修改数组元素
+	//arr_1 := [] int {1,2,3,4}
+	//arr_2 := change_array(arr_1)
+	//fmt.Println(arr_1)
+	//fmt.Println(arr_2)
+	////数组和切片问题，数组不可修改，切片可以修改，当作为函数参数传递时：数组是作为值传递，切片是作为类似于 指针传递（切片包含对底层数组内容的引用）
+	////如果使用数组作为值传递时，调用方法使用了指针，可以修改数组中的值
+	//var nums=[3]int{1,2,3}
+	//change(nums)   //nums并未被改变
+	//fmt.Println(nums[0])
+	//fmt.Println(nums)
+	//
+	//fmt.Println("*****************一维数组：方法****************")
+	//
+	//d := []int{1, 2, 3, 4, 5}
+	//fmt.Println(len(d))
+	//sum_f := GetAverage(d)
+	//fmt.Printf("数组的平均值为：%f\n", sum_f)
+
+	//endregion
+
+	//region 二维数组
+	//fmt.Println("*****************二维数组：遍历1****************")
+	//two_body := [2][3]int{
+	//	{2, 3, 4},
+	//	{4, 5, 3},
+	//}
+	//
+	////二维数组遍历
+	//for i, val := range two_body {
+	//	for j, val_1 := range val {
+	//		fmt.Printf("two_body[%d][%d] = %d\n", i, j, val_1)
+	//
+	//	}
+	//}
+	//fmt.Println("*****************二维数组：遍历2****************")
+	//two_body_1 := [...][3]string{
+	//	{"1", "2", "3"},
+	//	{"4", "5", "6"},
+	//}
+	//
+	//for i, v1 := range two_body_1 {
+	//	for j := range v1 {
+	//		fmt.Printf("two_body_1[%d][%d] = %s\n", i, j, two_body_1[i][j])
+	//
+	//	}
+	//}
+	//
+	//var arr = [3][4]int{
+	//	{0, 1, 2, 3},
+	//	{4, 5, 6, 7},
+	//	{8, 9, 10, 11},
+	//}
+	//fmt.Println(arr[1][1])
+
+	//向二维数组添加元素
+
+	//删除二维数组中的元素
+
+	//endregion
+
+	//region 浮点数精度丢失问题
+	//a := 1.69
+	//b := 1.7
+	//c := a * b      // 结果应该是2.873
+	//fmt.Println(c)  // 输出的是2.8729999999999998
+
+	//a := 1690           // 表示1.69
+	//b := 1700           // 表示1.70
+	//c := a * b          // 结果应该是2873000表示 2.873
+	//fmt.Println(c)      // 内部编码
+	//fmt.Println(float64(c) / 1000000) // 显示
+	//endregion
+
+	//region 指针
+	//a := 5
+	//var p *int
+	//p = &a
+	//fmt.Println(p)
+	//
+	//fmt.Println("使用指针交换两个变量的值")
+	//b := 10
+	//swap(&a, &b)
+	//fmt.Printf("a=%d, b=%d\n", a, b)
+
+	//endregion
+
+	student := Students{}
+	student.name = "SAM"
+	fmt.Println(student.name)
+	student.rename("Lemon")
+	fmt.Println(student.name)
+
+	student.name = "Turentu"
+	fmt.Println(student.name)
 
 }
 
@@ -204,3 +321,43 @@ func (c Circle) getLen() float64 {
 }
 
 //endregion
+
+func GetAverage(params []int) float64 {
+	var sum int
+	for _, v := range params {
+		sum += v
+	}
+	fmt.Printf("数组的和为：%d\n", sum)
+	fmt.Printf("数组的长度为：%d\n", len(params))
+	return float64(sum / len(params))
+
+}
+
+func change_array(p []int) []int {
+	p[1] = 23
+	return p
+}
+
+func change(nums [3]int) {
+	nums[0] = 100
+}
+
+func swap(a *int, b *int) (int, int) {
+	*a, *b = *b, *a // 简洁的写法
+	//var temp int
+	//temp = *a
+	//*a = *b
+	//*b = temp
+	return *a, *b
+}
+
+type Students struct {
+	name  string
+	sex   int
+	age   int
+	phone string
+}
+
+func (s *Students) rename(new_name string) {
+	s.name = new_name
+}
