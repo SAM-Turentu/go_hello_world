@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 )
@@ -244,14 +245,130 @@ func main() {
 
 	//endregion
 
-	student := Students{}
-	student.name = "SAM"
-	fmt.Println(student.name)
-	student.rename("Lemon")
-	fmt.Println(student.name)
+	//region 结构体
+	//student := Students{}
+	//student.name = "SAM"
+	//fmt.Println(student.name)
+	//student.rename("Lemon")
+	//fmt.Println(student.name)
+	//
+	//student.name = "Turentu"
+	//fmt.Println(student.name)
 
-	student.name = "Turentu"
-	fmt.Println(student.name)
+	//结构体成员首字母大写的字段，才可以转换为json格式
+	//class := ClassStruct{Class: "one", grade: "tow", head_teacher: "SAM"}
+	//fmt.Printf("class %s, grade %s\n", class.Class, class.grade)
+	////json.Marshal 返回两个值
+	//if result, err := json.Marshal(&class); err == nil { //前声明语句; 后逻辑判断语句
+	//	fmt.Println(string(result))
+	//}
+	////结构体成员首字母大写的字段，才可以转换为json格式
+	//user := UserInfo{UserName: "sam", Phone: "1829200", PassWord: "264264"}
+	//if result, err := json.Marshal(&user); err == nil { //前声明语句; 后逻辑判断语句
+	//	fmt.Println(string(result))
+	//}
+	//结构体成员首字母大写的字段，才可以转换为json格式
+	//user2 := UserInfoV2{UserName: "sam", Phone: "182", PassWord: "264264"}
+	//if result, err := json.Marshal(&user2); err == nil { //前声明语句; 后逻辑判断语句
+	//	fmt.Println(string(result))
+	//}
+	//json.Unmarshal()  JSON反序列化
+
+	//var p *UserInfo
+	//p = &user
+	//fmt.Println(p)          // &{sam 1829200 264264}
+	//fmt.Println(p.UserName) //  sam
+	//fmt.Println(*p)         //  {sam 1829200 264264}
+	//fmt.Println(&user)      //  &{sam 1829200 264264}
+	//fmt.Println(user)       //  {sam 1829200 264264}
+	//fmt.Println(user.Phone) //  1829200
+
+	//endregion
+
+	//region 切片
+	//var slice0 []int
+	//slice1 := []int{3, 2, 3}
+	//slice2 := make([]int, 10)
+	//var slice3 = make([]int, 10)
+	//slice4 := make([]int, 10, 20)
+	//
+	//fmt.Println(slice0)
+	//fmt.Println(slice1)
+	//fmt.Println(slice2)
+	//fmt.Println(slice3)
+	//
+	//if slice0 == nil {
+	//	fmt.Println("slice0 是空切片")
+	//}
+	//if slice1 == nil {
+	//	fmt.Println("slice1 是空切片")
+	//}
+	//if slice2 == nil {
+	//	fmt.Println("slice2 是空切片")
+	//}
+	//if slice4 == nil {
+	//	fmt.Println("slice4 是空切片")
+	//}
+	//
+	//slice1 = append(slice1, 1)
+	//slice1 = append(slice1, 2)
+	//slice1 = append(slice1)
+	//fmt.Printf("slice1 = %v\n", slice1) // slice1 = [3 2 3 1 2]
+	//
+	//s := slice1[1:3]
+	//fmt.Println(s) //[2 3]
+	//
+	//s = slice1[1:]
+	//fmt.Println(s) //[2 3 1 2]
+	//
+	//s = slice1[:]
+	//fmt.Println(s) //[3 2 3 1 2]
+	//
+	//s = slice1[:3] //没有负数slice1[-1]  slice1[:-1]
+	//fmt.Println(s) //[3 2 3]
+	//
+	////cap 计算切片容量的方法，测量切片最长可以达到多少
+	////切片的容量(capacity)问题  https://zhuanlan.zhihu.com/p/413972333
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(s), cap(s), s)
+	//s = append(s, 5)
+	//s = append(s, 6)
+	//s = append(s, 7)
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(s), cap(s), s)
+	//s = append(s, 8)
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(s), cap(s), s)
+
+	////两层切片（两层不定长的数组）
+	//var slice0 []int
+	//var slice1 [][]int
+	//slice2 := make([][]int, 5)
+	//slice3 := [][]int{{1, 2}, {3, 4}, {5, 6}}
+	//
+	////i := 6
+	////slice4 := [i]int{1, 2, 3, 4}  // 无法通过参数设置数组长度
+	//slice4 := [6]int{1, 2, 3, 4}
+	//
+	//fmt.Println(slice0)
+	//fmt.Println(slice1)
+	//fmt.Println(slice2)
+	//fmt.Println(slice3)
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(slice3), cap(slice3), slice3)
+	//fmt.Println(slice4)
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(slice4), cap(slice4), slice4)
+	//slice4[4] = 5 //定长数组不能使用append
+	//fmt.Println(slice4)
+	//fmt.Printf("len=%d cap=%d slice=%v\n", len(slice4), cap(slice4), slice4)
+	//
+	//
+	////slice1 = append(slice1, {2,3,4})  // error
+	////slice2 = append(slice2, {1,2})  // error
+	////slice3[3] = {7,8}
+
+	//endregion
+
+	//region map 序列化与反序列化
+	//serialization_of_map()
+	//deserialization_of_map()
+	//endregion
 
 }
 
@@ -358,6 +475,46 @@ type Students struct {
 	phone string
 }
 
+// 使用指针修改结构体成员的值
 func (s *Students) rename(new_name string) {
 	s.name = new_name
+}
+
+// ClassStruct 结构体成员首字母大写的字段，才可以转换为json格式
+type ClassStruct struct {
+	Class        string // 年级；首字母小写为私有结构体成员，json包无法使用
+	grade        string // 班级；且小写开头的字段在其他包内不能被调用
+	head_teacher string // 班主任
+}
+
+// UserInfo 结构体成员首字母大写的字段，才可以转换为json格式
+type UserInfo struct {
+	UserName string
+	Phone    string
+	PassWord string
+}
+
+type UserInfoV2 struct {
+	UserName string `json:"user_name"` // `json:"重命名"`
+	Phone    string `json:"phone"`
+	PassWord string `json:"-"` // `json:"-"`  标记忽略该字段
+}
+
+// map 序列化
+func serialization_of_map() {
+	var a map[string]interface{}
+	a = make(map[string]interface{})
+	a["Name"] = "Turentu"
+	a["Age"] = 18
+	a["skill"] = "python,java,.net,golang..."
+	if data, err := json.Marshal(a); err != nil {
+		fmt.Printf("Map序列化失败！err = %v\n", err)
+	} else {
+		fmt.Printf("Map序列化后：%v\n", string(data))
+	}
+}
+
+// 反序列化
+func deserialization_of_map() {
+
 }
