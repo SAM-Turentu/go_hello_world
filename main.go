@@ -370,6 +370,40 @@ func main() {
 	//deserialization_of_map()
 	//endregion
 
+	//region 范围Range
+	map1 := make(map[int]float32)
+	map1[1] = 1.0
+	map1[2] = 2.0
+	map1[3] = 3.0
+	map1[4] = 4.0
+	fmt.Println(map1)
+
+	// 读取 key 和 value
+	for key, value := range map1 {
+		fmt.Printf("key is: %d - value is: %f\n", key, value)
+	}
+
+	// 读取 key
+	for key := range map1 {
+		fmt.Printf("key is: %d\n", key)
+	}
+
+	// 读取 value
+	for _, value := range map1 {
+		fmt.Printf("value is: %f\n", value)
+	}
+
+	s := "中国人"
+	ss := "chinese"
+	fmt.Println(s)
+	for i := 0; i < len(ss); i++ { // 中文不能使用该方法遍历汉字
+		fmt.Printf("%x ", ss[i])
+	}
+	for _, val := range s {
+		fmt.Printf("%x %c,", val, val)
+	}
+
+	//endregion
 }
 
 // 函数放在调用函数的前后没有关系
