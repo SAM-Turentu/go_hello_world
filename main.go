@@ -35,6 +35,7 @@ type gopher struct{}
 type golang interface{}
 
 func main() {
+	fmt.Println("**************************开始**************************")
 	//fmt.Println("hello wold")
 	//fmt.Println("golang")
 	//fmt.Println("good good study, day day up")
@@ -230,7 +231,7 @@ func main() {
 	//c := a * b          // 结果应该是2873000表示 2.873
 	//fmt.Println(c)      // 内部编码
 	//fmt.Println(float64(c) / 1000000) // 显示
-	//endregion
+	//endregion∂
 
 	//region 指针
 	//a := 5
@@ -371,39 +372,79 @@ func main() {
 	//endregion
 
 	//region 范围Range
-	map1 := make(map[int]float32)
-	map1[1] = 1.0
-	map1[2] = 2.0
-	map1[3] = 3.0
-	map1[4] = 4.0
-	fmt.Println(map1)
-
-	// 读取 key 和 value
-	for key, value := range map1 {
-		fmt.Printf("key is: %d - value is: %f\n", key, value)
-	}
-
-	// 读取 key
-	for key := range map1 {
-		fmt.Printf("key is: %d\n", key)
-	}
-
-	// 读取 value
-	for _, value := range map1 {
-		fmt.Printf("value is: %f\n", value)
-	}
-
-	s := "中国人"
-	ss := "chinese"
-	fmt.Println(s)
-	for i := 0; i < len(ss); i++ { // 中文不能使用该方法遍历汉字
-		fmt.Printf("%x ", ss[i])
-	}
-	for _, val := range s {
-		fmt.Printf("%x %c,", val, val)
-	}
+	//map1 := make(map[int]float32)
+	//map1[1] = 1.0
+	//map1[2] = 2.0
+	//map1[3] = 3.0
+	//map1[4] = 4.0
+	//fmt.Println(map1)
+	//
+	//// 读取 key 和 value
+	//for key, value := range map1 {
+	//	fmt.Printf("key is: %d - value is: %f\n", key, value)
+	//}
+	//
+	//// 读取 key
+	//for key := range map1 {
+	//	fmt.Printf("key is: %d\n", key)
+	//}
+	//
+	//// 读取 value
+	//for _, value := range map1 {
+	//	fmt.Printf("value is: %f\n", value)
+	//}
+	//
+	//s := "中国人"
+	//ss := "chinese"
+	//fmt.Println(s)
+	//for i := 0; i < len(ss); i++ { // 中文不能使用该方法遍历汉字
+	//	fmt.Printf("%x ", ss[i])
+	//}
+	//for _, val := range s {
+	//	fmt.Printf("%x %c,", val, val)
+	//}
 
 	//endregion
+
+	//region map 集合
+	//map1 := make(map[string]string, 10)
+	//fmt.Printf("map1 = %v\n", map1)
+	//map2 := make(map[string]int, 10)
+	//fmt.Printf("map2 = %v\n", map2)
+	//
+	//map1["name"] = "sam"
+	//map1["age"] = "18"
+	//fmt.Printf("map1[name] = %s\n", map1["name"])
+	//fmt.Printf("map1[sex] = %s\n", map1["sex"]) //不存在的键值 输出零值 int 为0， string 为 ""， bool 为 false ...
+	//
+	//map3 := map[int]string{1: "hello", 2: "world"} // 键值可以是int型
+	//fmt.Printf("map3[1] = %s\n", map3[1])
+	//fmt.Printf("map3 = %v\n", map3)
+	//map4 := map[string]string{
+	//	"UserName": "SAM",
+	//	"Phone":    "1829200",
+	//}
+	//fmt.Printf("map4 = %v\n", map4) //map无序,每次都不相同
+	//
+	//map5 := map[string]interface{}{}
+	//map5["UserName"] = "Turentu"
+	//map5["Password"] = "264264"
+	//map5["Details"] = map[string]string{"Province": "Shanghai", "City": "Shanghai", "Country": "China"}
+	//map5["Age"] = []int{1, 2, 3}
+	//map5["Address"] = "Shanghai, China"
+	//map5["Address"] = "Shanghai, China"
+	//fmt.Printf("全部输出map5 = %v\n", map5) //map无序,每次都不相同
+	//for k, v := range map5 {
+	//	fmt.Printf("map5[%s] = %v,  type(%s) = %v\n", k, v, k, reflect.TypeOf(v))
+	//}
+	//delete(map5, "Age")                 // 删除键值对
+	//fmt.Printf("全部输出map5 = %v\n", map5) //map无序,每次都不相同
+	//map5["Age"] = 18
+	//fmt.Printf("map5[Age] = %d\n", map5["Age"])
+
+	//endregion
+
+	fmt.Println("**************************结束**************************")
 }
 
 // 函数放在调用函数的前后没有关系
