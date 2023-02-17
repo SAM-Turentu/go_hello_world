@@ -444,6 +444,23 @@ func main() {
 
 	//endregion
 
+	//region 递归函数
+	//num := 5
+	//ret := factorial(num) //普通阶乘方法（遍历）
+	//fmt.Printf("%d! = %d\n", num, ret)
+	//
+	//Num := 5
+	//ret1 := Factorial(Num) //阶乘使用递归方法
+	//fmt.Printf("%d! = %d\n", Num, ret1)
+	//
+	//a := fibonacci(10) //斐波那契数列
+	//fmt.Println(a)
+	//endregion
+
+	//region 类型转换
+
+	//endregion
+
 	fmt.Println("**************************结束**************************")
 }
 
@@ -592,4 +609,29 @@ func serialization_of_map() {
 // 反序列化
 func deserialization_of_map() {
 
+}
+
+// factorial 阶乘
+func factorial(num int) int {
+	result := 1
+	for i := 1; i <= num; i++ {
+		result *= i
+	}
+	return result
+}
+
+// Factorial 阶乘使用递归方法
+func Factorial(num int) int {
+	if num > 0 {
+		return num * Factorial(num-1)
+	}
+	return 1
+}
+
+//斐波那契数列
+func fibonacci(num int) int {
+	if num < 2 {
+		return num
+	}
+	return fibonacci(num-1) + fibonacci(num-2)
 }
