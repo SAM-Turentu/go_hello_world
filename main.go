@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
+	"fmt" // 打印
 	"math"
+	"strconv" // 类型转换库
+	"time"
 )
 
 // 常量定义
@@ -458,6 +461,94 @@ func main() {
 	//endregion
 
 	//region 类型转换
+	//convert()
+	//endregion
+
+	//region 接口
+	//var tree tree_interface
+	////tree = new(Tree{TreeName: "小树", TreeAge: 15, TreeCat: "未知"}) // 不能这么初始化
+	////tree = new(Tree) // = &Tree{}
+	//tree = &Tree{}
+	//tree.GetTreeAge()
+	//tree.SetTreeAge(10)
+	//fmt.Println(tree)
+	//fmt.Println(tree.GetTreeAge())
+	//tree.setTreeName("小树") // 接口无法访问结构体成员方法
+	//endregion
+
+	//region 错误处理
+	//s, err := error_func()
+	//if err != nil {
+	//	fmt.Printf("err = %v\n", err)
+	//
+	//}else{
+	//	fmt.Printf("s = %s\n", s)
+	//	//fmt.Printf("s = %s, err = %v\n", s, err)
+	//
+	//}
+
+	//a, err := Divide(10, 0)
+	//if err == "" {
+	//	fmt.Printf("ret = %f\v", a)
+	//} else {
+	//	fmt.Printf("err = %s\n", err)
+	//}
+	//
+	//b, err1 := Divide(10, 2)
+	//if err1 == "" {
+	//	fmt.Printf("ret = %f\v", b)
+	//} else {
+	//	fmt.Printf("err = %s\n", err1)
+	//}
+
+	//endregion
+
+	//region 并发
+	//go says("Sam", "你好")     //开启 goroutine
+	//says("Turentu", "hello") //有两个goroutine在执行
+
+	/*
+		声明一个通道，通道在使用前必须先创建
+		通道默认不带缓冲区
+		发送端发送数据，必须有接收端接受相应的数据
+	*/
+	arr1 := []int{7, 2, 8}
+	arr2 := []int{-9, 4, 0}
+	c := make(chan int) // 没有设置缓冲区 // c := make(chan int, 100)
+	go arr_sum(arr1, c)
+	go arr_sum(arr2, c)
+	x, y := <-c, <-c // x 不一定等于arr1数组之和
+	fmt.Printf("x = %d, y = %d, x + y = %d\n", x, y, x+y)
+
+	ch := make(chan int, 2)
+	ch <- 1
+	ch <- 2
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+	//fmt.Println(<-ch) // 写第三个就会报错
+
+	//遍历通道
+	ch = make(chan int, 10)
+	go fabo(cap(ch), ch)
+	for i := range ch {
+		fmt.Println(i)
+	}
+
+	//go func(c chan int) { //读写均可的channel c }
+	//go func(c <- chan int) { //只读的Channel }
+	//go func(c chan <- int) {  //只写的Channel }
+
+	c = make(chan int, 5)
+	go put(c)
+	for {
+		time.Sleep(1000 * time.Millisecond)
+		data, ok := <-c
+		if ok {
+			fmt.Printf("<- 取出 %d\n", data)
+		} else {
+			break
+		}
+	}
 
 	//endregion
 
@@ -628,10 +719,172 @@ func Factorial(num int) int {
 	return 1
 }
 
-//斐波那契数列
+// 斐波那契数列
 func fibonacci(num int) int {
 	if num < 2 {
 		return num
 	}
 	return fibonacci(num-1) + fibonacci(num-2)
 }
+
+// 类型转换
+func convert() {
+	num := 1
+	num_f64 := float64(num)
+	fmt.Println(num_f64)
+	num_f64 = 10
+	fmt.Println(num_f64)
+	num_f32 := float32(num)
+	fmt.Printf("num(float32) = %f\n", num_f32)
+	fmt.Printf("num(float64) = %f\n", num_f64)
+
+	num_f64 = 10.6
+	num = int(num_f64) //没有四舍五入，只去整
+	fmt.Printf("num_f64 -- > int :%d\n", num)
+
+	num_f64 = 20 // 类型已定义，无法通过赋值转换变量类型
+	fmt.Printf("num_f64 = %f\n", num_f64)
+
+	//region 显示声明会报错
+	//var a int = 10
+	//var b int64
+	//b = a // error cannot use a (variable of type int) as type int64 in assignment
+	//fmt.Println(a)
+	//fmt.Println(b)
+	//endregion
+
+	//region 字符串转换整型
+	var a string = "10"
+	//b := int(a) // 错误方法
+
+	b, err := strconv.Atoi(a) //返回两个值
+	if err != nil {
+		return
+	}
+	fmt.Printf("string 转换为整型 b(int) = %d\n", b)
+
+	c := strconv.Itoa(b) // 返回一个值
+	fmt.Printf("int 转换为string c(string) = %s\n", c)
+	q := strconv.Quote("你好")
+	qq := strconv.QuoteToASCII("你好")
+	fmt.Println(q)
+	fmt.Println(qq)
+	//endregion
+
+}
+
+// region 接口
+type Tree struct {
+	TreeName string //树名
+	TreeAge  int    //树龄
+	TreeCat  string //树种
+}
+
+// region 结构体成员方法
+func (t *Tree) setTreeName(TreeName string) {
+	t.TreeName = TreeName
+}
+
+func (t *Tree) getTreename() string {
+	return t.TreeName
+}
+
+//endregion
+
+type tree_interface interface {
+	GetTreeAge() int
+	SetTreeAge(TreeAge int)
+}
+
+func (t Tree) GetTreeAge() int {
+	return t.TreeAge
+}
+
+func (t *Tree) SetTreeAge(TreeAge int) {
+	t.TreeAge = TreeAge
+}
+
+//endregion
+
+// region 错误处理
+func error_func() (string, error) {
+	return "你好", errors.New("Hello")
+}
+
+type DivideError struct {
+	dividee int
+	divider int
+}
+
+func (d *DivideError) Error() string {
+	errFormat := `
+    Cannot proceed, the divider is zero.
+    dividee: %d
+    divider: 0`
+	return fmt.Sprintf(errFormat, d.dividee)
+}
+
+// 被除数不能为0，打印错误，但代码还可以继续运行
+func Divide(dividee int, divider int) (res float64, err string) {
+	if divider == 0 {
+		d := DivideError{dividee: dividee, divider: divider}
+		err = d.Error()
+		return
+	} else {
+		return float64(dividee) / float64(divider), ""
+	}
+}
+
+//todo error，recover，defer,panic 还不太清楚怎么用
+//defer func(){
+//	recover()
+//}()
+//
+//func except() {
+//	recover()
+//}
+//
+//func test(){
+//	defer except()
+//	panic("runtime error")
+//}
+//endregion
+
+// region 并发
+func says(name string, s string) {
+	for i := 0; i < 5; i++ {
+		time.Sleep(5 * time.Millisecond)
+		fmt.Printf("%s say: '%s'\n", name, s)
+	}
+}
+
+// 两个通道计算数组和
+func arr_sum(arr []int, ch chan int) {
+	var sum int
+	for _, v := range arr {
+		sum += v
+	}
+	ch <- sum // 把sum发送到通道ch
+}
+
+// 遍历通道和关闭通道（斐波那契数列）
+func fabo(n int, ch chan int) {
+	x, y := 0, 1
+	for i := 0; i < n; i++ {
+		ch <- x
+		x, y = y, x+y
+	}
+	close(ch) // 关闭通道
+}
+
+func put(c chan int) {
+	for i := 0; i < 10; i++ {
+		c <- i
+		time.Sleep(100 * time.Millisecond)
+		fmt.Println("->放入", i)
+	}
+	fmt.Println("所有的都放进去了！关闭缓冲区，但是里面的数据不会丢失，还能取出。")
+	close(c)
+}
+
+//endregion
