@@ -38,7 +38,7 @@ type gopher struct{}
 type golang interface{}
 
 func main() {
-	fmt.Println("**************************开始**************************")
+	fmt.Println("**************************main 开始**************************")
 	//fmt.Println("hello wold")
 	//fmt.Println("golang")
 	//fmt.Println("good good study, day day up")
@@ -512,47 +512,51 @@ func main() {
 		通道默认不带缓冲区
 		发送端发送数据，必须有接收端接受相应的数据
 	*/
-	arr1 := []int{7, 2, 8}
-	arr2 := []int{-9, 4, 0}
-	c := make(chan int) // 没有设置缓冲区 // c := make(chan int, 100)
-	go arr_sum(arr1, c)
-	go arr_sum(arr2, c)
-	x, y := <-c, <-c // x 不一定等于arr1数组之和
-	fmt.Printf("x = %d, y = %d, x + y = %d\n", x, y, x+y)
-
-	ch := make(chan int, 2)
-	ch <- 1
-	ch <- 2
-	fmt.Println(<-ch)
-	fmt.Println(<-ch)
-	//fmt.Println(<-ch) // 写第三个就会报错
-
-	//遍历通道
-	ch = make(chan int, 10)
-	go fabo(cap(ch), ch)
-	for i := range ch {
-		fmt.Println(i)
-	}
-
-	//go func(c chan int) { //读写均可的channel c }
-	//go func(c <- chan int) { //只读的Channel }
-	//go func(c chan <- int) {  //只写的Channel }
-
-	c = make(chan int, 5)
-	go put(c)
-	for {
-		time.Sleep(1000 * time.Millisecond)
-		data, ok := <-c
-		if ok {
-			fmt.Printf("<- 取出 %d\n", data)
-		} else {
-			break
-		}
-	}
+	//arr1 := []int{7, 2, 8}
+	//arr2 := []int{-9, 4, 0}
+	//c := make(chan int) // 没有设置缓冲区 // c := make(chan int, 100)
+	//go arr_sum(arr1, c)
+	//go arr_sum(arr2, c)
+	//x, y := <-c, <-c // x 不一定等于arr1数组之和
+	//fmt.Printf("x = %d, y = %d, x + y = %d\n", x, y, x+y)
+	//
+	//ch := make(chan int, 2)
+	//ch <- 1
+	//ch <- 2
+	//fmt.Println(<-ch)
+	//fmt.Println(<-ch)
+	////fmt.Println(<-ch) // 写第三个就会报错
+	//
+	////遍历通道
+	//ch = make(chan int, 10)
+	//go fabo(cap(ch), ch)
+	//for i := range ch {
+	//	fmt.Println(i)
+	//}
+	//
+	////go func(c chan int) { //读写均可的channel c }
+	////go func(c <- chan int) { //只读的Channel }
+	////go func(c chan <- int) {  //只写的Channel }
+	//
+	//c = make(chan int, 5)
+	//go put(c)
+	//for {
+	//	time.Sleep(1000 * time.Millisecond)
+	//	data, ok := <-c
+	//	if ok {
+	//		fmt.Printf("<- 取出 %d\n", data)
+	//	} else {
+	//		break
+	//	}
+	//}
 
 	//endregion
 
-	fmt.Println("**************************结束**************************")
+	//region 二次深入学习 耶耶耶
+	Second()
+	//endregion
+
+	fmt.Println("**************************main 结束**************************")
 }
 
 // 函数放在调用函数的前后没有关系
