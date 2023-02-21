@@ -95,33 +95,34 @@ func Second() {
 
 	//region 切片copy
 	// 按照其中较小的那个数组切片的元素个数进行复制
-	a := make([]int, 5, 10)
-	fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
-	a[0] = 1 // 向a切片中添加5个元素
-	a[1] = 2 // 向a切片中添加5个元素
-	a[2] = 3 // 向a切片中添加5个元素
-	a[3] = 4 // 向a切片中添加5个元素
-	a[4] = 5 // 向a切片中添加5个元素
-	fmt.Printf("a: %v\n", a)
-	//b := []int{}
-	b := make([]int, 3, 10)
-
-	fmt.Printf("b: %v, len(b): %d, cap(b): %d\n", b, len(b), cap(b))
-	copy(b, a) // 将a复制给b，len(b) = 3 所以只复制a[:3]
-	fmt.Printf("b: %v, len(b): %d, cap(b): %d\n", b, len(b), cap(b))
-
-	c := make([]int, 10, 10)
-	fmt.Printf("c: %v, len(c): %d, cap(c): %d\n", c, len(c), cap(c))
-	copy(c, a) // 将c复制给a，len(a) = 5 所以只复制c[:5]
-	fmt.Printf("c: %v, len(c): %d, cap(c): %d\n", c, len(c), cap(c))
-	fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
+	//a := make([]int, 5, 10)
+	//fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
+	//a[0] = 1 // 向a切片中添加5个元素
+	//a[1] = 2 // 向a切片中添加5个元素
+	//a[2] = 3 // 向a切片中添加5个元素
+	//a[3] = 4 // 向a切片中添加5个元素
+	//a[4] = 5 // 向a切片中添加5个元素
+	//fmt.Printf("a: %v\n", a)
+	////b := []int{}
+	//b := make([]int, 3, 10)
+	//
+	//fmt.Printf("b: %v, len(b): %d, cap(b): %d\n", b, len(b), cap(b))
+	//copy(b, a) // 将a复制给b，len(b) = 3 所以只复制a[:3]
+	//fmt.Printf("b: %v, len(b): %d, cap(b): %d\n", b, len(b), cap(b))
+	//
+	//c := make([]int, 10, 10)
+	//fmt.Printf("c: %v, len(c): %d, cap(c): %d\n", c, len(c), cap(c))
+	//copy(c, a) // 将c复制给a，len(a) = 5 所以只复制c[:5]
+	//fmt.Printf("c: %v, len(c): %d, cap(c): %d\n", c, len(c), cap(c))
+	//fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
 
 	//endregion
 
 	//region 双链表
-	new_list := New() // 新建一个链表
-	//new_list.insertValue()
-
+	a := []int{1, 2, 3, 4, 5}
+	fmt.Printf("a : %v\n", a)
+	//e := Element{}
+	//e.Value = a
 	//endregion
 
 	//region
@@ -248,5 +249,85 @@ func (l *List) move(e, at *Element) *Element {
 	//链表长度不变
 	return e
 }
+
+// 删除节点并返回元素值
+func (l *List) Remove(e *Element) interface{} {
+	if e.list == l {
+		//判断节点是否在唉该链表中
+		// 如果链表是空的话，而且e是nil的话会panic
+		l.remove(e)
+	}
+	return e.Value
+}
+
+// 插入一个值到链表头
+func (l *List) PushFront(v interface{}) *Element {
+	return l.insertValue(v, &l.root)
+}
+
+// 在链尾添加一个值
+func (l *List) PushBack(v interface{}) *Element {
+	return l.insertValue(v, l.root.prev)
+}
+
+// 插入一个值到某个节点前面
+func (l *List) InsertBefore(v interface{}, mark *Element) *Element {
+	if mark.list != l {
+		return nil
+	}
+	return l.insertValue(v, mark.prev)
+}
+
+// 插入一个元素在某个节点后
+func (l *List) InsertBack(v interface{}, mark *Element) *Element {
+	if mark.list != l {
+		return nil
+	}
+	return l.insertValue(v, mark)
+}
+
+// 将一个节点移动到链表首
+func (l *List) MoveToFront(e *Element) {
+	if e.list != l || l.root.next != e {
+		return
+	}
+	l.move(e, &l.root)
+}
+
+// 将一个元素移动到链表尾部
+func (l *List) MoveToBack(e *Element) {
+	if e.list != l || l.root.prev != e {
+		return
+	}
+	l.move(e, l.root.prev)
+}
+
+// 将一个节点移动到另一个节点前
+func (l *List) MoveBefore(e, mark *Element) {
+	if e.list != l || e == mark || mark.list != l {
+		return
+	}
+	l.move(e, mark.prev)
+}
+
+// 将一个节点移动到另一个节点后
+func (l *List) MoveAfter(e, mark *Element) {
+	if e.list != l || e == mark || mark.list != l {
+		return
+	}
+	l.move(e, mark)
+}
+
+////在链表后面添加一个链表
+//func (l *List) PushBackList(other *List) {
+//	for i, e := other.Len(), other.Front(); i >0; i, e = i-1, e.Next(){
+//		l.insertValue(e.Value, l.root.prev)
+//	}
+//}
+//
+////将一个链表逆序添加到链表到前面
+//func (l *List) PushFrontList(other *List) {
+//
+//}
 
 //endregion
