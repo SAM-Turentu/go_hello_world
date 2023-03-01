@@ -133,6 +133,28 @@ func Second() {
 
 	//endregion
 
+	//region goto
+	go_to()
+	goto goto_func
+goto_func:
+	fmt.Println("可以跳转到此处")
+OuterLoop:
+	for i := 0; i < 4; i++ {
+		fmt.Println(i)
+
+		if i == 1 {
+			break OuterLoop
+		}
+	}
+	//endregion
+
+	//region
+
+	//endregion
+	//region
+
+	//endregion
+
 	fmt.Println("************************Second END************************")
 }
 
@@ -329,5 +351,21 @@ func (l *List) MoveAfter(e, mark *Element) {
 //func (l *List) PushFrontList(other *List) {
 //
 //}
+
+//endregion
+
+// region
+func go_to() {
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 5; j++ {
+			if i%2 != 0 {
+				fmt.Printf("i = %d, j = %d\n", i, j)
+				goto break_print
+			}
+		}
+	}
+break_print:
+	fmt.Println("跳出循环")
+}
 
 //endregion
