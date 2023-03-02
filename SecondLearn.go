@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"sync"
 )
@@ -213,10 +214,29 @@ func Second() {
 	//endregion
 
 	//region 闭包
+	//accumulator := Accumulate(1)
+	//fmt.Println(accumulator())
+	//fmt.Println(accumulator())
+	//fmt.Printf("打印累加器的地址：%p\n", &accumulator)
+	//
+	//accumulator2 := Accumulate(10)
+	//fmt.Println(accumulator2())
+	//fmt.Printf("打印累加器的地址：%p\n", &accumulator2) // 两个累加器地址不同
+	//
+	//generator := playerGen("high noon")
+	//
+	//name, hp := generator()
+	//fmt.Println(name, hp)
 
 	//endregion
 
-	//region
+	//region 可变参数类型
+	//myfunc(1, 2, 3, 4)
+	//myfunc(7, 8)
+	//
+	////将输入连接成字符串
+	//fmt.Println(joinStrings("pig", "and", "cat"))
+	//fmt.Println(joinStrings("hammer", "mom", "and", "hawk"))
 
 	//endregion
 
@@ -499,9 +519,49 @@ func (f FuncCaller) Call(p interface{}) {
 
 //region
 
+// Accumulate 累加器
+func Accumulate(value int) func() int {
+	//闭包
+	return func() int {
+		value++
+		return value
+	} // 返回一个int类型的func()
+}
+
+// 生成器（工厂模式）
+func playerGen(name string) func() (string, int) {
+	hp := 150
+	//返回创建的闭包
+	return func() (string, int) {
+		//将变量应用到闭包中
+		return name, hp
+	}
+}
+
 //endregion
 
-//region
+//region 可变参数
+
+// myfunc 可变参数类型
+func myfunc(args ...int) {
+	for _, v := range args {
+		fmt.Printf("%d", v)
+	}
+	fmt.Println()
+}
+
+// joinStrings 任意类型的可变参数
+func joinStrings(slist ...string) string {
+	// 定义一个字节缓冲， 快速地连接字符串
+	var b bytes.Buffer
+	// 遍历可变参数列表slist， 类型为[]string
+	for _, s := range slist {
+		// 将遍历出的字符串连续写入字节数组
+		b.WriteString(s)
+	}
+	// 将连接好的字节数组转换为字符串输出
+	return b.String()
+}
 
 //endregion
 
