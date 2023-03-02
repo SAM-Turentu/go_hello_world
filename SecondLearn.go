@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"sync"
-	"strconv"
 )
 
 func Second() {
@@ -169,32 +168,58 @@ func Second() {
 	//}
 	//endregion
 
-	//region
-
-	//endregion
-
-	//region
-
-	//endregion
-
 	//region goto
-	go_to()
-	goto goto_func
-	goto_func:
-		fmt.Println("可以跳转到此处")
-	OuterLoop:
-	for i := 0; i < 4; i++ {
-		fmt.Println(i)
+	//go_to()
+	//goto goto_func
+	//goto_func:
+	//	fmt.Println("可以跳转到此处")
+	//OuterLoop:
+	//	for i := 0; i < 4; i++ {
+	//	fmt.Println(i)
+	//
+	//	if i == 1 {
+	//		break OuterLoop
+	//	}
+	//}
+	//endregion
 
-		if i == 1 {
-			break OuterLoop
-		}
-	}
+	//region 匿名函数
+	//func(d int) {
+	//	fmt.Printf("d: %d\n", d)
+	//}(20)
+	//
+	//d := func(d int) {
+	//	fmt.Printf("d: %d\n", d)
+	//}
+	//d(101)
+	//arr := []int{1, 2, 3, 4, 5}
+	//visit(arr, func(v int) { // 匿名函数作为回调函数
+	//	fmt.Printf("%d * %d = %d\n", v, v, v*v)
+	//})
+	//endregion
+
+	//region 函数当接口
+	////结构体的接口
+	//var invoker Invoker
+	//s := new(Studentss)
+	//invoker = s
+	//invoker.Call("hello")
+	//
+	////函数体实现接口
+	//invoker = FuncCaller(func(v interface{}) {
+	//	fmt.Println("from function", v)
+	//})
+	//invoker.Call("hello")
+	//endregion
+
+	//region 闭包
+
 	//endregion
 
 	//region
 
 	//endregion
+
 	//region
 
 	//endregion
@@ -204,7 +229,7 @@ func Second() {
 }
 
 // region 可以写一个in方法
-func in(p int, arr []int) bool {
+/*func in(p int, arr []int) bool {
 	result := false
 	for _, v := range arr {
 		if v == p {
@@ -212,7 +237,7 @@ func in(p int, arr []int) bool {
 		}
 	}
 	return result
-}
+}*/
 
 //func in(s string, arr []int) bool {
 //
@@ -424,7 +449,7 @@ func sync_map() {
 
 //endregion
 
-// region
+// region goto
 func go_to() {
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 5; j++ {
@@ -437,5 +462,49 @@ func go_to() {
 break_print:
 	fmt.Println("跳出循环")
 }
+
+//endregion
+
+// region 匿名函数
+// 匿名函数作为回调函数
+func visit(list []int, f func(int)) {
+	for _, v := range list {
+		f(v)
+	}
+}
+
+//endregion
+
+// region 函数体实现接口 和 结构体实现接口 对比
+// 结构体的接口
+type Invoker interface {
+	Call(interface{})
+}
+
+type Studentss struct {
+}
+
+func (s *Studentss) Call(p interface{}) {
+	fmt.Println("from struct", p)
+}
+
+// 函数的接口
+type FuncCaller func(interface{})
+
+func (f FuncCaller) Call(p interface{}) {
+	f(p)
+}
+
+//endregion
+
+//region
+
+//endregion
+
+//region
+
+//endregion
+
+//region
 
 //endregion
