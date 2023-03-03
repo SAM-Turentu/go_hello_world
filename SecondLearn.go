@@ -2,7 +2,10 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
+	"net"
+	"os"
 	"sync"
 )
 
@@ -238,6 +241,20 @@ func Second() {
 	//fmt.Println(joinStrings("pig", "and", "cat"))
 	//fmt.Println(joinStrings("hammer", "mom", "and", "hawk"))
 
+	//endregion
+
+	//region defer 可以用来关闭文件，释放资源
+	//deferr()
+
+	//v := readValue("key_name")
+	//v2 := readValue2("key_name_2")
+	//fmt.Println(v)
+	//fmt.Println(v2)
+	//endregion
+
+	//region
+	var err = errors.New("this is error")
+	fmt.Println(err)
 	//endregion
 
 	//region
@@ -562,6 +579,92 @@ func joinStrings(slist ...string) string {
 	// 将连接好的字节数组转换为字符串输出
 	return b.String()
 }
+
+//endregion
+
+// region defer
+func deferr() {
+	fmt.Println("start...")
+	a := 1
+	defer fmt.Println(a + 1) // 延迟执行语句
+	defer fmt.Println(a + 2) //类似栈，后进先出
+	defer fmt.Println(a + 3) //在函数退出时，释放资源
+	a++
+	fmt.Printf("a + 1: %d\n", a)
+	fmt.Printf("a: %d\n", a)
+	fmt.Println("end")
+}
+
+var (
+	valueByKey      = make(map[string]int)
+	valueByKeyGuard sync.Mutex // 保证使用映射时的并发安全的互斥锁
+)
+
+func readValue(key string) int {
+	valueByKeyGuard.Lock() // 对共享资源加锁
+	v := valueByKey[key]
+	valueByKeyGuard.Unlock() // 对共享资源解锁
+	return v
+}
+
+// readValue2 使用延迟并发解锁 由上面简化后
+func readValue2(key string) int {
+	valueByKeyGuard.Lock()         // 对共享资源加锁
+	defer valueByKeyGuard.Unlock() // 函数执行完后，释放资源
+	return valueByKey[key]
+}
+
+func fileSize(filename string) int64 {
+	f, err := os.Open(filename)
+	if err != nil {
+		return 0
+	}
+	//defer f.Close()
+
+	info, err := f.Stat()
+	if err != nil {
+		f.Close()
+		return 0
+	}
+
+	size := info.Size()
+	f.Close()
+	return size
+
+}
+
+//endregion
+
+// region go中的错误机制
+func Dial(network, address string) (net.Conn, error) {
+	var d net.Dialer
+	return d.Dial(network, address)
+}
+
+//type Writer interface {
+//	Writer(p []byte) (n int, err error)
+//}
+//
+//type Closer interface {
+//	Closer() error
+//}
+
+//type errorString struct {
+//	s string
+//}
+//
+//// New 自定义一个错误
+//func New(text string) error {
+//	return &errorString{text}
+//}
+//
+//func (e errorString) Error() string {
+//	return e.s
+//}
+
+//endregion
+
+//region
 
 //endregion
 
