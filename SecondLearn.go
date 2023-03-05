@@ -1,15 +1,20 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
-	"errors"
 	"fmt"
+	"log"
 	"net"
 	"os"
+	"regexp"
+	"runtime"
+	"strconv"
 	"sync"
 )
 
 func Second() {
+	//start := time.Now()  // 获取当前时间
 	fmt.Println("*********************Second Learn Golang*********************")
 	fmt.Println("Second Learn Golang")
 
@@ -244,17 +249,115 @@ func Second() {
 	//endregion
 
 	//region defer 可以用来关闭文件，释放资源
-	//deferr()
-
+	//_deferr()
 	//v := readValue("key_name")
 	//v2 := readValue2("key_name_2")
 	//fmt.Println(v)
 	//fmt.Println(v2)
 	//endregion
 
+	//region error
+	//var err = errors.New("this is error")  // 相当于 python的 raise "发生了错误！"
+	//s := err.Error() //  this is error
+	//fmt.Println(err) //  this is error
+	//fmt.Println(s)
+	//endregion
+
+	//region panic 宕机
+	//panic("好疼！")  // 类似与其他语言的 Exception
+	//MustComplie("正则发生了错误")
+	//endregion
+
+	//region 宕机后继续运行
+
+	// 允许一段手动触发的错误
+	//ProtectRun(func() {
+	//	fmt.Println("手动宕机前")
+	//	// 使用panic传递上下文
+	//	panic(&paincContext{
+	//		"手动触发panic",
+	//	})
+	//})
+
+	// 故意造成空指针访问错误
+	//ProtectRun(func() {
+	//	fmt.Println("赋值宕机前")
+	//	var a *int
+	//	*a = 1
+	//	fmt.Println("赋值宕机后")
+	//})
+
+	//fmt.Println("运行后")
+
+	//endregion
+
+	//region 代码运行时间
+
+	//duration := time.Since(start)  // 将开始时间传入，返回与此刻时间的差值，即程序运行时间
+	//fmt.Println("程序运行时间：", duration)
+
+	//s := time.Now().UnixNano() // 纳秒
+	//s_haomiao := s / 1e6       // 毫秒
+	//fmt.Println(s)
+	//fmt.Println(s_haomiao)
+	//for i := 0; i < 100000; i++ {
+	//	sum := 0
+	//	sum++
+	//}
+	//e := time.Now().UnixNano()
+	//e_haomiao := e / 1e6
+	//fmt.Println(e_haomiao)
+	//d := e - s
+	//fmt.Println(d)                          // 使用纳秒 有数值
+	//fmt.Printf("%d\n", e_haomiao-s_haomiao) // 毫秒差值太小
+
+	//endregion
+
+	//region 结构体
+	//cat := Cat{"花花", 1, "母"} // 匿名结构体字段
+	//fmt.Println(cat)
+	//
+	//car := Cars{
+	//	Wheel: Wheel{Size: 18},
+	//
+	//	// 初始化引擎；嵌入式匿名结构体 需要重新声明
+	//	Engine: struct {
+	//		Power int
+	//		Type  string
+	//	}{Power: 220, Type: "BMW"},
+	//}
+	//fmt.Println(car)
+
+	//endregion
+
+	//region SetFinalizer 终止器
+	//entry() // 终止器只有在对象被 GC 时，才会被执行。其他情况下，都不会被执行，即使程序正常结束或者发生错误。
+	//for i := 0; i < 5; i++ {
+	//	time.Sleep(time.Second)
+	//	runtime.GC()
+	//}
+
+	//endregion
+
 	//region
-	var err = errors.New("this is error")
-	fmt.Println(err)
+	data := []byte("Hello World！ 你好世界！")
+
+	read(data)
+	readByte(data)
+	//data = []byte("Hello World, 你好世界！")
+	readBytes(data)
+
+	data = []byte("Hello World！\r\n 你好世界！")
+	readLine(data)
+
+	data = []byte("你好世界！\r\n Hello World！")
+
+	readRune(data)
+
+	//endregion
+
+	//region
+
 	//endregion
 
 	//region
@@ -583,7 +686,7 @@ func joinStrings(slist ...string) string {
 //endregion
 
 // region defer
-func deferr() {
+func _deferr() {
 	fmt.Println("start...")
 	a := 1
 	defer fmt.Println(a + 1) // 延迟执行语句
@@ -664,7 +767,144 @@ func Dial(network, address string) (net.Conn, error) {
 
 //endregion
 
-//region
+// region 正则表达式发生错误时，主动宕机（抛错）
+func MustComplie(s string) *regexp.Regexp {
+	regexp, err := regexp.Compile(s)
+	if err != nil {
+		panic(`regexp: Compile(` + strconv.Quote(s) + `): ` + err.Error())
+		defer fmt.Println("宕机后要做的事") // 方法资源释放时执行
+	}
+	return regexp
+}
+
+//endregion
+
+//region 宕机继续运行
+
+// paincContext 崩溃时需要传递的上下文信息
+type PaincContext struct {
+	function string // 所在函数
+}
+
+// ProtectRun 保护方式允许一个函数
+func ProtectRun(entry func()) {
+	defer func() {
+		// 发生宕机时，获取painc传递的上下文并打印
+		err := recover()
+		switch err.(type) {
+		case runtime.Error: //运行时错误
+			fmt.Println("runtime error: ", err)
+		default: // 非运行时错误
+			fmt.Println("error: ", err)
+		}
+	}()
+
+	entry()
+
+}
+
+//endregion
+
+//region 结构体
+
+type Command struct {
+	Name    string // 指令名称
+	Var     *int   // 指令绑定的变量
+	Comment string // 指令的注释
+}
+
+func NewCommand(name string, varref *int, command string) *Command {
+	return &Command{
+		Name:    name,
+		Var:     varref,
+		Comment: command,
+	}
+}
+
+type Cat struct {
+	Name   string
+	int    //匿名字段
+	string //匿名字段
+}
+
+type Wheel struct { //轮子
+	Size int // 尺寸
+}
+
+type Cars struct {
+	Wheel
+	// 嵌入的结构体不回被外部引用；初始化这个嵌入式结构体时，需要重新声明才能赋值
+	Engine struct { // 引擎
+		Power int    // 功率
+		Type  string // 类型
+	}
+}
+
+//endregion
+
+// region 垃圾回收GC
+type Road int
+
+func findRoad(r *Road) {
+	log.Println("road: ", *r)
+}
+
+func entry() {
+	var rd Road = Road(999)
+	r := &rd
+
+	runtime.SetFinalizer(r, findRoad)
+
+}
+
+//endregion
+
+//region Read,ReadByte, ReadBytes,ReadLine, ReadRune, ReadSlice, ReadString,UnreadByte, UnreadRune, Buffered,Peek
+
+func read(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	var buf [128]byte // buf 用来存放读取数据的字节切片
+	n, err := r.Read(buf[:])
+	fmt.Println(string(buf[:]), n, err)
+}
+
+func readByte(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	c, err := r.ReadByte()
+	fmt.Println(string(c), err)
+}
+
+func readBytes(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	var delim byte = ','            // 在读到第一个"标识符"前出错，返回已读取的数据和错误，
+	line, err := r.ReadBytes(delim) // 当返回的数据不以“delim”结尾时，返回的 err 才不为空值   EOF
+	fmt.Println(string(line), err)
+}
+
+func readLine(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	line, prefix, err := r.ReadLine() // 一行数据太多，超出缓冲区，只会返回前面的数据，isPrefix会返回ture，剩余的数据会在之后调用中返回
+	fmt.Println(string(line), prefix, err)
+}
+
+func readRune(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	ch, size, err := r.ReadRune() // 读取一个utf-8字符，并返回字节数
+	fmt.Println(string(ch), size, err)
+}
+
+func readSlice(data []byte) {
+
+}
+
+func readString(data []byte) {
+
+}
 
 //endregion
 
