@@ -18,7 +18,7 @@ func Second() {
 	fmt.Println("*********************Second Learn Golang*********************")
 	fmt.Println("Second Learn Golang")
 
-	//region 浮点数简写和科学计数法
+	// #region 浮点数简写和科学计数法
 	//num := .234 // python不能这么写
 	//fmt.Printf("num = %f\n", num)
 	//num1 := 1. // python不能这么写
@@ -30,9 +30,9 @@ func Second() {
 	//const Planck = 6.62606957e-34  // 普朗克常数
 	//fmt.Println(Avogadro)          // 6.02214129e23
 	//fmt.Println(Planck)            // 6.62606957e-34
-	//endregion
+	// #endregion
 
-	//region if 中 一个值在数组中的判断
+	// #region if 中 一个值在数组中的判断
 	//arr := []int{1, 2, 3, 4}
 	////if 1 in arr{} // 在python等语言中可以使用 in，go中不能使用
 	//for _, v := range arr {
@@ -45,32 +45,32 @@ func Second() {
 	//	fmt.Println(_boo)
 	//}
 
-	//endregion
+	// #endregion
 
-	//region 整型范围
+	// #region 整型范围
 	//fmt.Printf("int max:%d, min:%d\n", math.MaxInt, math.MinInt)       // int = int64
 	//fmt.Printf("int8 max:%d, min:%d\n", math.MaxInt8, math.MinInt8)    // -128, 127
 	//fmt.Printf("int16 max:%d, min:%d\n", math.MaxInt16, math.MinInt16) // -32768, 32767
 	//fmt.Printf("int32 max:%d, min:%d\n", math.MaxInt32, math.MinInt32) // -2147483648, 2147483647
 	//fmt.Printf("int64 max:%d, min:%d\n", math.MaxInt64, math.MinInt64) // -9223372036854775808, 9223372036854775807
 
-	//endregion
+	// #endregion
 
-	//region 指针
+	// #region 指针
 	//var model = flag.String("params", "value", "help text")
 	//flag.Parse()
 	//fmt.Println(*model) // 打印配置参数（program arguments）  test_params_value_flagString
 
-	//endregion
+	// #endregion
 
-	//region 类型的别名
+	// #region 类型的别名
 	//type newInt = int // newInt 即 int
 	//var a newInt = 10
 	//fmt.Println(a)
 
-	//endregion
+	// #endregion
 
-	//region 切片
+	// #region 切片
 	//arr1 := []int {1,2,3,4}
 	//fmt.Println(arr1[len(arr1) - 1])  // error fmt.Println(arr1[len(arr1)])
 	//
@@ -100,9 +100,9 @@ func Second() {
 	//b = append(b[:4], b[5:]...) // 删除 b[4] = 5 的元素
 	//fmt.Printf("删除b[4]后，b:%v\n", b)
 
-	//endregion
+	// #endregion
 
-	//region 切片copy
+	// #region 切片copy
 	// 按照其中较小的那个数组切片的元素个数进行复制
 	//a := make([]int, 5, 10)
 	//fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
@@ -125,9 +125,9 @@ func Second() {
 	//fmt.Printf("c: %v, len(c): %d, cap(c): %d\n", c, len(c), cap(c))
 	//fmt.Printf("a: %v, len(a): %d, cap(a): %d\n", a, len(a), cap(a))
 
-	//endregion
+	// #endregion
 
-	//region 双链表
+	// #region 双链表
 	//l := list.New() // 初始化一个新链表
 	//fmt.Printf("双向链表的长度：%d\n", l.Len())
 	//l.PushFront(10) // 向链表中添加元素
@@ -146,9 +146,9 @@ func Second() {
 	//	fmt.Println(e.Value)
 	//}
 
-	//endregion
+	// #endregion
 
-	//region range 返回的是引用
+	// #region range 返回的是引用
 	//arr := []int{10,20, 30,40}
 	//var a *int
 	//for i, v := range arr {
@@ -156,28 +156,28 @@ func Second() {
 	//	a = &v
 	//}
 	//fmt.Printf("&a: %v, *a: %v\n", a, *a)
-	//endregion
+	// #endregion
 
-	//region sync.Map 并发环境中使用map
+	// #region sync.Map 并发环境中使用map
 	//sync_map()
-	//endregion
+	// #endregion
 
-	//region nil 赋值【不建议使用】
+	// #region nil 赋值【不建议使用】
 	//fmt.Println(nil)
 	//fmt.Printf("nil 类型 %T\n", nil)  // nil 没有类型
 	//nil := 1  // nil 不是关键词或保留字，可以当做变量使用【不建议使用】
 	//fmt.Println(nil)
-	//endregion
+	// #endregion
 
-	//region switch
+	// #region switch
 	//var a = "daddy" // 或 num
 	//switch a {
 	//case "mum", "daddy":
 	//	fmt.Println("family")
 	//}
-	//endregion
+	// #endregion
 
-	//region goto
+	// #region goto
 	//go_to()
 	//goto goto_func
 	//goto_func:
@@ -190,9 +190,9 @@ func Second() {
 	//		break OuterLoop
 	//	}
 	//}
-	//endregion
+	// #endregion
 
-	//region 匿名函数
+	// #region 匿名函数
 	//func(d int) {
 	//	fmt.Printf("d: %d\n", d)
 	//}(20)
@@ -205,9 +205,9 @@ func Second() {
 	//visit(arr, func(v int) { // 匿名函数作为回调函数
 	//	fmt.Printf("%d * %d = %d\n", v, v, v*v)
 	//})
-	//endregion
+	// #endregion
 
-	//region 函数当接口
+	// #region 函数当接口
 	////结构体的接口
 	//var invoker Invoker
 	//s := new(Studentss)
@@ -219,9 +219,9 @@ func Second() {
 	//	fmt.Println("from function", v)
 	//})
 	//invoker.Call("hello")
-	//endregion
+	// #endregion
 
-	//region 闭包
+	// #region 闭包
 	//accumulator := Accumulate(1)
 	//fmt.Println(accumulator())
 	//fmt.Println(accumulator())
@@ -236,9 +236,9 @@ func Second() {
 	//name, hp := generator()
 	//fmt.Println(name, hp)
 
-	//endregion
+	// #endregion
 
-	//region 可变参数类型
+	// #region 可变参数类型
 	//myfunc(1, 2, 3, 4)
 	//myfunc(7, 8)
 	//
@@ -246,29 +246,29 @@ func Second() {
 	//fmt.Println(joinStrings("pig", "and", "cat"))
 	//fmt.Println(joinStrings("hammer", "mom", "and", "hawk"))
 
-	//endregion
+	// #endregion
 
-	//region defer 可以用来关闭文件，释放资源
+	// #region defer 可以用来关闭文件，释放资源
 	//_deferr()
 	//v := readValue("key_name")
 	//v2 := readValue2("key_name_2")
 	//fmt.Println(v)
 	//fmt.Println(v2)
-	//endregion
+	// #endregion
 
-	//region error
+	// #region error
 	//var err = errors.New("this is error")  // 相当于 python的 raise "发生了错误！"
 	//s := err.Error() //  this is error
 	//fmt.Println(err) //  this is error
 	//fmt.Println(s)
-	//endregion
+	// #endregion
 
-	//region panic 宕机
+	// #region panic 宕机
 	//panic("好疼！")  // 类似与其他语言的 Exception
 	//MustComplie("正则发生了错误")
-	//endregion
+	// #endregion
 
-	//region 宕机后继续运行
+	// #region 宕机后继续运行
 
 	// 允许一段手动触发的错误
 	//ProtectRun(func() {
@@ -289,9 +289,9 @@ func Second() {
 
 	//fmt.Println("运行后")
 
-	//endregion
+	// #endregion
 
-	//region 代码运行时间
+	// #region 代码运行时间
 
 	//duration := time.Since(start)  // 将开始时间传入，返回与此刻时间的差值，即程序运行时间
 	//fmt.Println("程序运行时间：", duration)
@@ -311,9 +311,9 @@ func Second() {
 	//fmt.Println(d)                          // 使用纳秒 有数值
 	//fmt.Printf("%d\n", e_haomiao-s_haomiao) // 毫秒差值太小
 
-	//endregion
+	// #endregion
 
-	//region 结构体
+	// #region 结构体
 	//cat := Cat{"花花", 1, "母"} // 匿名结构体字段
 	//fmt.Println(cat)
 	//
@@ -328,47 +328,67 @@ func Second() {
 	//}
 	//fmt.Println(car)
 
-	//endregion
+	// #endregion
 
-	//region SetFinalizer 终止器
+	// #region SetFinalizer 终止器
 	//entry() // 终止器只有在对象被 GC 时，才会被执行。其他情况下，都不会被执行，即使程序正常结束或者发生错误。
 	//for i := 0; i < 5; i++ {
 	//	time.Sleep(time.Second)
 	//	runtime.GC()
 	//}
 
-	//endregion
+	// #endregion
 
-	//region
-	data := []byte("Hello World！ 你好世界！")
+	// #region io 读
+	// data := []byte("Hello World！ 你好世界！")
+	// read(data)
 
-	read(data)
-	readByte(data)
-	//data = []byte("Hello World, 你好世界！")
-	readBytes(data)
+	// readByte(data)
 
-	data = []byte("Hello World！\r\n 你好世界！")
-	readLine(data)
+	// data = []byte("Hello World, 你好世界！")
+	// readBytes(data)
 
-	data = []byte("你好世界！\r\n Hello World！")
+	// data = []byte("Hello World！\r\n 你好世界！")
+	// readLine(data)
 
-	readRune(data)
+	// data = []byte("你好世界！\r\n Hello World！")
+	// readRune(data)
 
-	//endregion
+	// data = []byte("Hello World, 你好世界！")
+	// readSlice(data)
 
-	//region
+	// readString(data)
 
-	//endregion
+	// // data = []byte("Go语言入门教程")
+	// read_buffered(data)
 
-	//region
+	// #endregion
 
-	//endregion
+	// #region io 写
+	data := []byte("Hello World, 你好世界！")
+	avaliable(data)
+
+	wirte_buffered(data)
+
+	WriteByte(data)
+
+	writeRune()
+
+	str := string(data)
+
+	writeString(str)
+
+	// #endregion
+
+	// #region
+
+	// #endregion
 
 	fmt.Println("*************************Second END*************************")
 
 }
 
-// region 可以写一个in方法
+//  #region 可以写一个in方法
 /*func in(p int, arr []int) bool {
 	result := false
 	for _, v := range arr {
@@ -383,9 +403,9 @@ func Second() {
 //
 //}
 
-//endregion
+// #endregion
 
-// region 定义链表  https://zhuanlan.zhihu.com/p/404754444   ==  import container/list
+//  #region 定义链表  https://zhuanlan.zhihu.com/p/404754444   ==  import container/list
 // Element 定义链表中的节点结构体
 //type Element struct {
 //	next, prev *Element
@@ -562,9 +582,10 @@ func Second() {
 ////
 ////}
 
-//endregion
+// #endregion
 
-// region sync.Map 并发环境中使用map
+//	#region sync.Map 并发环境中使用map
+//
 // 需要并发读写时，要加锁，
 func sync_map() {
 	var s sync.Map
@@ -587,9 +608,9 @@ func sync_map() {
 
 }
 
-//endregion
+// #endregion
 
-// region goto
+// #region goto
 func go_to() {
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 5; j++ {
@@ -603,9 +624,10 @@ break_print:
 	fmt.Println("跳出循环")
 }
 
-//endregion
+// #endregion
 
-// region 匿名函数
+//	#region 匿名函数
+//
 // 匿名函数作为回调函数
 func visit(list []int, f func(int)) {
 	for _, v := range list {
@@ -613,9 +635,10 @@ func visit(list []int, f func(int)) {
 	}
 }
 
-//endregion
+// #endregion
 
-// region 函数体实现接口 和 结构体实现接口 对比
+//	#region 函数体实现接口 和 结构体实现接口 对比
+//
 // 结构体的接口
 type Invoker interface {
 	Call(interface{})
@@ -635,9 +658,9 @@ func (f FuncCaller) Call(p interface{}) {
 	f(p)
 }
 
-//endregion
+// #endregion
 
-//region
+// #region
 
 // Accumulate 累加器
 func Accumulate(value int) func() int {
@@ -658,9 +681,9 @@ func playerGen(name string) func() (string, int) {
 	}
 }
 
-//endregion
+// #endregion
 
-//region 可变参数
+// #region 可变参数
 
 // myfunc 可变参数类型
 func myfunc(args ...int) {
@@ -683,9 +706,9 @@ func joinStrings(slist ...string) string {
 	return b.String()
 }
 
-//endregion
+// #endregion
 
-// region defer
+// #region defer
 func _deferr() {
 	fmt.Println("start...")
 	a := 1
@@ -736,9 +759,9 @@ func fileSize(filename string) int64 {
 
 }
 
-//endregion
+// #endregion
 
-// region go中的错误机制
+// #region go中的错误机制
 func Dial(network, address string) (net.Conn, error) {
 	var d net.Dialer
 	return d.Dial(network, address)
@@ -765,9 +788,9 @@ func Dial(network, address string) (net.Conn, error) {
 //	return e.s
 //}
 
-//endregion
+// #endregion
 
-// region 正则表达式发生错误时，主动宕机（抛错）
+// #region 正则表达式发生错误时，主动宕机（抛错）
 func MustComplie(s string) *regexp.Regexp {
 	regexp, err := regexp.Compile(s)
 	if err != nil {
@@ -777,9 +800,9 @@ func MustComplie(s string) *regexp.Regexp {
 	return regexp
 }
 
-//endregion
+// #endregion
 
-//region 宕机继续运行
+// #region 宕机继续运行
 
 // paincContext 崩溃时需要传递的上下文信息
 type PaincContext struct {
@@ -803,9 +826,9 @@ func ProtectRun(entry func()) {
 
 }
 
-//endregion
+// #endregion
 
-//region 结构体
+// #region 结构体
 
 type Command struct {
 	Name    string // 指令名称
@@ -840,9 +863,9 @@ type Cars struct {
 	}
 }
 
-//endregion
+// #endregion
 
-// region 垃圾回收GC
+// #region 垃圾回收GC
 type Road int
 
 func findRoad(r *Road) {
@@ -857,14 +880,14 @@ func entry() {
 
 }
 
-//endregion
+// #endregion
 
-//region Read,ReadByte, ReadBytes,ReadLine, ReadRune, ReadSlice, ReadString,UnreadByte, UnreadRune, Buffered,Peek
+// #region IO 读方法（Read,ReadByte, ReadBytes,ReadLine, ReadRune, ReadSlice, ReadString,UnreadByte, UnreadRune, Buffered,Peek）
 
 func read(data []byte) {
 	rd := bytes.NewReader(data)
 	r := bufio.NewReader(rd)
-	var buf [128]byte // buf 用来存放读取数据的字节切片
+	var buf [50]byte // buf 用来存放读取数据的字节切片
 	n, err := r.Read(buf[:])
 	fmt.Println(string(buf[:]), n, err)
 }
@@ -899,15 +922,108 @@ func readRune(data []byte) {
 }
 
 func readSlice(data []byte) {
-
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	var delim byte = ',' // 分隔符
+	line, err := r.ReadSlice(delim)
+	fmt.Println("start", string(line), err)
+	line, err = r.ReadSlice(delim)
+	fmt.Println(string(line), err)
+	line, err = r.ReadSlice(delim)
+	fmt.Println(string(line), err)
+	fmt.Println("end.")
 }
 
 func readString(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	var delim byte = ','
+	line, err := r.ReadString(delim)
+	fmt.Println(string(line), err)
+}
+
+func read_buffered(data []byte) {
+	rd := bytes.NewReader(data)
+	r := bufio.NewReader(rd)
+	var buf [14]byte
+	n, err := r.Read(buf[:])
+	fmt.Println(string(buf[:n]), n, err) // Go语言入门 14 <nil>
+	rn := r.Buffered()
+	fmt.Println(rn) // 6
+
+	n, err = r.Read(buf[:])
+	fmt.Println(string(buf[:n]), n, err) // 教程 6 <nil>
+	rn = r.Buffered()
+	fmt.Println(rn) // 0
 
 }
 
-//endregion
+// #endregion
 
-//region
+// #region IO write 写方法（Avaliable, Buffered, Flush, Wirte, WriteByte, WriteRune, WriteString）
 
-//endregion
+// avaliable 返回缓冲区未使用的字节数
+func avaliable(data []byte) {
+	wr := bytes.NewBuffer(nil)
+	w := bufio.NewWriter(wr)
+	fmt.Println("写入前未使用的缓冲区为：", w.Available())
+	w.Write(data)
+	fmt.Printf("写入%q后，未使用的缓冲区为：%d\n", string(data), w.Available())
+	fmt.Println()
+}
+
+// buffered 返回已写入当前缓冲区的字节数
+func wirte_buffered(data []byte) {
+	wr := bytes.NewBuffer(nil)
+	w := bufio.NewWriter(wr)
+
+	fmt.Println("写入前未使用的缓冲区为：", w.Available())
+
+	w.Write(data) // 写入缓冲区，返回已写入的字节数，写入长度和原始长度不同，返回error
+
+	fmt.Printf("写入%q后，未使用的缓冲区为：%d\n", string(data), w.Buffered())
+
+	w.Flush() // 把缓冲区中的主句写入底层io.Writer，并返回错误信息，写入成功返回error=nil
+
+	fmt.Println("执行Flush方法后，写入的字节数为：", w.Buffered())
+	fmt.Println()
+}
+
+func WriteByte(data []byte) {
+	wr := bytes.NewBuffer(nil)
+	w := bufio.NewWriter(wr)
+	var c byte = 'G'
+	err := w.WriteByte(c) // 写入一个字节，成功返回nil
+	w.Flush()
+	fmt.Println(string(wr.Bytes()), err)
+	fmt.Println()
+}
+
+func writeRune() {
+	wr := bytes.NewBuffer(nil)
+	w := bufio.NewWriter(wr)
+
+	var r rune = 'G'
+	size, err := w.WriteRune(r) // 以utf-8编码写入一个unicode字符
+	w.Flush()
+	fmt.Println(string(wr.Bytes()), size, err)
+	fmt.Println()
+}
+
+func writeString(data string) {
+	wr := bytes.NewBuffer(nil)
+	w := bufio.NewWriter(wr)
+	n, err := w.WriteString(data) // 写入一个字符串，返回字节数和错误信息
+	fmt.Println(string(wr.Bytes()), n, err)
+	fmt.Println()
+}
+
+// #endregion
+
+// #region
+
+// #endregion
+
+// #region
+
+// #endregion

@@ -50,13 +50,13 @@ func main() {
 	//fmt.Printf("user:%s", user)
 	//fmt.Println(_boo)
 	//
-	////region 初始化声明
+	//// #region 初始化声明
 	//// 变量必须先声明
 	////只能存在于函数内，全局变量无法使用；
 	////不使用变量也会报错；
 	//user_age := 18
 	//fmt.Println(&user_age) // 添加 &  获取内存中的地址 0xc00000e0d8  0xc000122058  0xc00000e0d8  0xc0000a6058
-	////endregion
+	//// #endregion
 	//
 	////a, b, c := 5, 7, "abc"  // 同时初始化声明
 	////fmt.Println(a,b,c)
@@ -114,14 +114,14 @@ func main() {
 	//fmt.Printf("data_b=%d\n", data_b)
 	//fmt.Printf("data_b()=%d\n", data_b())
 
-	//region 调用其他文件方法，注意配置问题，不然无法运行调试
+	// #region 调用其他文件方法，注意配置问题，不然无法运行调试
 	//a := PrintHello()
 	//fmt.Println(a)
 	//fmt.Println("***************************")
 	//hello()
-	//endregion
+	// #endregion
 
-	//region 矩形结构体和方法
+	// #region 矩形结构体和方法
 	//r := Rectangle{}
 	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
 	//fmt.Println("******************************")
@@ -132,18 +132,18 @@ func main() {
 	//r.setLength(10)
 	//r.setWidth(5)
 	//fmt.Printf("矩形的长：%f\n矩形的宽：%f\n矩形的面积：%f\n", r.length, r.width, r.getArea())
-	//endregion
+	// #endregion
 
-	//region 圆的结构体
+	// #region 圆的结构体
 	//fmt.Println("**************函数方法**************")
 	//circle := Circle{}
 	//circle.radius = 10
 	//area := circle.getArea()
 	//fmt.Printf("圆的面积：%f\n", area)
 	//fmt.Printf("圆的周长：%f\n", circle.getLen())
-	//endregion
+	// #endregion
 
-	//region 一维数组
+	// #region 一维数组
 	//fmt.Println("**************一维数组**************")
 	//var data_list []float64
 	//fmt.Println(data_list)
@@ -181,9 +181,9 @@ func main() {
 	//sum_f := GetAverage(d)
 	//fmt.Printf("数组的平均值为：%f\n", sum_f)
 
-	//endregion
+	// #endregion
 
-	//region 二维数组
+	// #region 二维数组
 	//fmt.Println("*****************二维数组：遍历1****************")
 	//two_body := [2][3]int{
 	//	{2, 3, 4},
@@ -221,9 +221,9 @@ func main() {
 
 	//删除二维数组中的元素
 
-	//endregion
+	// #endregion
 
-	//region 浮点数精度丢失问题
+	// #region 浮点数精度丢失问题
 	//a := 1.69
 	//b := 1.7
 	//c := a * b      // 结果应该是2.873
@@ -236,7 +236,7 @@ func main() {
 	//fmt.Println(float64(c) / 1000000) // 显示
 	//endregion∂
 
-	//region 指针
+	// #region 指针
 	//a := 5
 	//var p *int
 	//p = &a
@@ -247,9 +247,9 @@ func main() {
 	//swap(&a, &b)
 	//fmt.Printf("a=%d, b=%d\n", a, b)
 
-	//endregion
+	// #endregion
 
-	//region 结构体
+	// #region 结构体
 	//student := Students{}
 	//student.name = "SAM"
 	//fmt.Println(student.name)
@@ -287,9 +287,9 @@ func main() {
 	//fmt.Println(user)       //  {sam 1829200 264264}
 	//fmt.Println(user.Phone) //  1829200
 
-	//endregion
+	// #endregion
 
-	//region 切片
+	// #region 切片
 	//var slice0 []int
 	//slice1 := []int{3, 2, 3}
 	//slice2 := make([]int, 10)
@@ -367,14 +367,14 @@ func main() {
 	////slice2 = append(slice2, {1,2})  // error
 	////slice3[3] = {7,8}
 
-	//endregion
+	// #endregion
 
-	//region map 序列化与反序列化
+	// #region map 序列化与反序列化
 	//serialization_of_map()
 	//deserialization_of_map()
-	//endregion
+	// #endregion
 
-	//region 范围Range
+	// #region 范围Range
 	//map1 := make(map[int]float32)
 	//map1[1] = 1.0
 	//map1[2] = 2.0
@@ -407,9 +407,9 @@ func main() {
 	//	fmt.Printf("%x %c,", val, val)
 	//}
 
-	//endregion
+	// #endregion
 
-	//region map 集合
+	// #region map 集合
 	//map1 := make(map[string]string, 10)
 	//fmt.Printf("map1 = %v\n", map1)
 	//map2 := make(map[string]int, 10)
@@ -445,9 +445,9 @@ func main() {
 	//map5["Age"] = 18
 	//fmt.Printf("map5[Age] = %d\n", map5["Age"])
 
-	//endregion
+	// #endregion
 
-	//region 递归函数
+	// #region 递归函数
 	//num := 5
 	//ret := factorial(num) //普通阶乘方法（遍历）
 	//fmt.Printf("%d! = %d\n", num, ret)
@@ -458,13 +458,13 @@ func main() {
 	//
 	//a := fibonacci(10) //斐波那契数列
 	//fmt.Println(a)
-	//endregion
+	// #endregion
 
-	//region 类型转换
+	// #region 类型转换
 	//convert()
-	//endregion
+	// #endregion
 
-	//region 接口
+	// #region 接口
 	//var tree tree_interface
 	////tree = new(Tree{TreeName: "小树", TreeAge: 15, TreeCat: "未知"}) // 不能这么初始化
 	////tree = new(Tree) // = &Tree{}
@@ -474,9 +474,9 @@ func main() {
 	//fmt.Println(tree)
 	//fmt.Println(tree.GetTreeAge())
 	//tree.setTreeName("小树") // 接口无法访问结构体成员方法
-	//endregion
+	// #endregion
 
-	//region 错误处理
+	// #region 错误处理
 	//s, err := error_func()
 	//if err != nil {
 	//	fmt.Printf("err = %v\n", err)
@@ -501,9 +501,9 @@ func main() {
 	//	fmt.Printf("err = %s\n", err1)
 	//}
 
-	//endregion
+	// #endregion
 
-	//region 并发
+	// #region 并发
 	//go says("Sam", "你好")     //开启 goroutine
 	//says("Turentu", "hello") //有两个goroutine在执行
 
@@ -550,11 +550,11 @@ func main() {
 	//	}
 	//}
 
-	//endregion
+	// #endregion
 
-	//region 二次深入学习 耶耶耶
+	// #region 二次深入学习 耶耶耶
 	Second()
-	//endregion
+	// #endregion
 
 	fmt.Println("**************************main 结束**************************")
 }
@@ -573,7 +573,7 @@ func data() func() int {
 	}
 }
 
-//region 矩形结构体和矩形的方法
+// #region 矩形结构体和矩形的方法
 
 // 定义一个矩形的结构体
 type Rectangle struct {
@@ -606,9 +606,9 @@ func (r Rectangle) getArea() float64 {
 	return r.length * r.width
 }
 
-//endregion
+// #endregion
 
-// region 定义一个结构体
+// #region 定义一个结构体
 type Circle struct {
 	radius float64
 }
@@ -624,7 +624,7 @@ func (c Circle) getLen() float64 {
 	return 2 * PI * c.radius
 }
 
-//endregion
+// #endregion
 
 func GetAverage(params []int) float64 {
 	var sum int
@@ -749,15 +749,15 @@ func convert() {
 	num_f64 = 20 // 类型已定义，无法通过赋值转换变量类型
 	fmt.Printf("num_f64 = %f\n", num_f64)
 
-	//region 显示声明会报错
+	// #region 显示声明会报错
 	//var a int = 10
 	//var b int64
 	//b = a // error cannot use a (variable of type int) as type int64 in assignment
 	//fmt.Println(a)
 	//fmt.Println(b)
-	//endregion
+	// #endregion
 
-	//region 字符串转换整型
+	// #region 字符串转换整型
 	var a string = "10"
 	//b := int(a) // 错误方法
 
@@ -773,18 +773,18 @@ func convert() {
 	qq := strconv.QuoteToASCII("你好")
 	fmt.Println(q)
 	fmt.Println(qq)
-	//endregion
+	// #endregion
 
 }
 
-// region 接口
+// #region 接口
 type Tree struct {
 	TreeName string //树名
 	TreeAge  int    //树龄
 	TreeCat  string //树种
 }
 
-// region 结构体成员方法
+// #region 结构体成员方法
 func (t *Tree) setTreeName(TreeName string) {
 	t.TreeName = TreeName
 }
@@ -793,7 +793,7 @@ func (t *Tree) getTreename() string {
 	return t.TreeName
 }
 
-//endregion
+// #endregion
 
 type tree_interface interface {
 	GetTreeAge() int
@@ -808,9 +808,9 @@ func (t *Tree) SetTreeAge(TreeAge int) {
 	t.TreeAge = TreeAge
 }
 
-//endregion
+// #endregion
 
-// region 错误处理
+// #region 错误处理
 func error_func() (string, error) {
 	return "你好", errors.New("Hello")
 }
@@ -852,9 +852,9 @@ func Divide(dividee int, divider int) (res float64, err string) {
 //	defer except()
 //	panic("runtime error")
 //}
-//endregion
+// #endregion
 
-// region 并发
+// #region 并发
 func says(name string, s string) {
 	for i := 0; i < 5; i++ {
 		time.Sleep(5 * time.Millisecond)
@@ -891,4 +891,4 @@ func put(c chan int) {
 	close(c)
 }
 
-//endregion
+// #endregion
