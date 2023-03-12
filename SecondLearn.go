@@ -485,7 +485,7 @@ func Second() {
 
 }
 
-//  #region 可以写一个in方法
+//region 可以写一个in方法
 /*func in(p int, arr []int) bool {
 	result := false
 	for _, v := range arr {
@@ -502,7 +502,7 @@ func Second() {
 
 //endregion
 
-//  #region 定义链表  https://zhuanlan.zhihu.com/p/404754444   ==  import container/list
+//region 定义链表  https://zhuanlan.zhihu.com/p/404754444   ==  import container/list
 // Element 定义链表中的节点结构体
 //type Element struct {
 //	next, prev *Element
@@ -681,7 +681,7 @@ func Second() {
 
 //endregion
 
-//	#region sync.Map 并发环境中使用map
+// region sync.Map 并发环境中使用map
 //
 // 需要并发读写时，要加锁，
 func sync_map() {
@@ -723,7 +723,7 @@ break_print:
 
 //endregion
 
-//	#region 匿名函数
+// region 匿名函数
 //
 // 匿名函数作为回调函数
 func visit(list []int, f func(int)) {
@@ -734,7 +734,7 @@ func visit(list []int, f func(int)) {
 
 //endregion
 
-//	#region 函数体实现接口 和 结构体实现接口 对比
+// region 函数体实现接口 和 结构体实现接口 对比
 //
 // 结构体的接口
 type Invoker interface {
@@ -757,7 +757,7 @@ func (f FuncCaller) Call(p interface{}) {
 
 //endregion
 
-//region
+//region 闭包
 
 // Accumulate 累加器
 func Accumulate(value int) func() int {
