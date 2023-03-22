@@ -117,6 +117,19 @@ func AdvanceLearn() {
 
 	//endregion
 
+	//region 等待组 sync.WaitGroup
+	//fmt.Println(runtime.NumCPU())  // 16核处理器
+	//waitgroup()
+	//endregion
+
+	//region 并发中的死锁
+	//deadlock()
+	//endregion
+
+	//region
+
+	//endregion
+
 	//region
 
 	//endregion
@@ -353,6 +366,82 @@ func incCounter2(id int) {
 		mutex.Unlock() // 释放锁，允许其他正在等待的 goroutine 进入临界区
 	}
 }
+
+//endregion
+
+//region  等待组 sync.WaitGroup
+
+func waitgroup() {
+	//wg.Add(-1) == wg.Done() 两者相等
+	var urls = []string{
+		"http://www.github.com/",
+		"https://www.baidu.com/",
+		"https://www.bing.com/",
+	}
+	for _, url := range urls {
+		wg.Add(1) // 每一个任务开始时, 将等待组增加1
+		go func(url string) {
+			defer wg.Done() // 使用defer, 表示函数完成时将等待组值减1
+			response, err := http.Get(url)
+			body := response.Body
+			header := response.Header
+			fmt.Println(body, "\n", header)
+			fmt.Println(url, response, err)
+			fmt.Println()
+		}(url)
+	}
+	wg.Wait() // 等待所有的任务完成
+	fmt.Println("结束")
+}
+
+//endregion
+
+//region 试图运行死锁
+
+type value struct {
+	memAccess sync.Mutex
+	value     int
+}
+
+func deadlock() {
+	runtime.GOMAXPROCS(3)
+	sum := func(v1, v2 *value) {
+		defer wg.Done()
+		v1.memAccess.Lock()
+		fmt.Println("v1 上锁")
+		time.Sleep(2 * time.Second)
+		fmt.Println("v1 休眠2秒结束")
+		v2.memAccess.Lock() // fatal error: all goroutines are asleep - deadlock!
+		fmt.Println("v2 再次上锁")
+		fmt.Printf("sum = %d\n", v1.value+v2.value)
+		v1.memAccess.Unlock()
+		v2.memAccess.Unlock()
+	}
+
+	product := func(v1, v2 *value) {
+		defer wg.Done()
+		v2.memAccess.Lock()
+		fmt.Println("v2 上锁")
+		time.Sleep(2 * time.Second)
+		fmt.Println("v2 休眠2秒结束")
+		v1.memAccess.Lock() // fatal error: all goroutines are asleep - deadlock!
+		fmt.Println("v1 再次上锁")
+		fmt.Printf("product = %d\n", v1.value*v2.value)
+		v1.memAccess.Unlock()
+		v2.memAccess.Unlock()
+	}
+	var v1, v2 value
+	v1.value = 2
+	v2.value = 3
+	wg.Add(2)
+	go sum(&v1, &v2)
+	go product(&v1, &v2)
+	wg.Wait()
+}
+
+//endregion
+
+//region
 
 //endregion
 
