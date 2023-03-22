@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/labstack/echo"
 	"math/rand"
@@ -126,8 +127,23 @@ func AdvanceLearn() {
 	//deadlock()
 	//endregion
 
-	//region
+	//region 活锁，两个并发都在改变状态
+	//livelock()
+	//endregion
 
+	//region 饥饿
+	//hungry()
+	//endregion
+
+	//region
+	//orderGoroutine()
+	//orderGoroutine2()
+	//for i := 0; i < 10; i++ {
+	//	orderGoroutine3()
+	//	fmt.Println()
+	//	fmt.Println()
+	//}
+	orderGoroutine4()
 	//endregion
 
 	//region
@@ -441,7 +457,159 @@ func deadlock() {
 
 //endregion
 
+//region 活锁
+
+func livelock() {
+	runtime.GOMAXPROCS(3) // 设置使用3核处理器
+	cv := sync.NewCond(&sync.Mutex{})
+	go func() {
+		for range time.Tick(1 * time.Second) { // 通过tick 控制两个人的步调
+			cv.Broadcast()
+		}
+	}()
+
+	takeStep := func() {
+		cv.L.Lock()
+		cv.Wait()
+		cv.L.Unlock()
+	}
+
+	tryDir := func(dirName string, dir *int32, out *bytes.Buffer) bool {
+		fmt.Fprintf(out, "%+v", dirName)
+		atomic.AddInt32(dir, 1)
+		takeStep()                      // 走上一步
+		if atomic.LoadInt32(dir) == 1 { // 走成功就返回
+			fmt.Fprintf(out, ". Success!")
+			return true
+		}
+		takeStep() // 没有成功，再走回来
+		atomic.AddInt32(dir, -1)
+		return false
+	}
+
+	var left, right int32
+	tryLeft := func(out *bytes.Buffer) bool {
+		return tryDir(" 向左走", &left, out)
+	}
+	tryRight := func(out *bytes.Buffer) bool {
+		return tryDir(" 向右走", &right, out)
+	}
+
+	walk := func(walking *sync.WaitGroup, name string) {
+		var out bytes.Buffer
+		defer walking.Done()
+		defer func() { fmt.Println(out.String()) }()
+		fmt.Fprintf(&out, "%v is trying to scoot:", name)
+
+		for i := 0; i < 5; i++ {
+			if tryLeft(&out) || tryRight(&out) {
+				return
+			}
+		}
+		fmt.Fprintf(&out, "\n%v is tried!", name)
+	}
+	wg.Add(2)
+	go walk(&wg, "男人")
+	go walk(&wg, "女人")
+	wg.Wait()
+
+}
+
+//endregion
+
+//region 饥饿
+
+func hungry() {
+	runtime.GOMAXPROCS(3)
+	const runtime = 1 * time.Second
+	var shareLock sync.Mutex
+
+	greedyWorker := func() {
+		defer wg.Done()
+		var count int
+		for begin := time.Now(); time.Since(begin) <= runtime; {
+			shareLock.Lock()
+			time.Sleep(3 * time.Nanosecond)
+			shareLock.Unlock()
+			count++
+		}
+		fmt.Printf("Greedy worker was able to execute %v work loops\n", count)
+	}
+
+	politeWorder := func() {
+		defer wg.Done()
+		var count int
+		for begin := time.Now(); time.Since(begin) <= runtime; {
+			shareLock.Lock()
+			time.Sleep(1 * time.Nanosecond)
+			shareLock.Unlock()
+
+			shareLock.Lock()
+			time.Sleep(1 * time.Nanosecond)
+			shareLock.Unlock()
+
+			shareLock.Lock()
+			time.Sleep(1 * time.Nanosecond)
+			shareLock.Unlock()
+
+			count++
+		}
+		fmt.Printf("polite worker was able to execute %v work loops\n", count)
+	}
+
+	wg.Add(2)
+	go greedyWorker()
+	go politeWorder()
+	wg.Wait()
+
+}
+
+//endregion
+
 //region
+
+func orderGoroutine() {
+	var mu sync.Mutex // 互斥锁
+	mu.Lock()
+	go func() {
+		fmt.Println("打印 互斥锁")
+		mu.Unlock()
+	}()
+	mu.Lock()
+}
+
+func orderGoroutine2() {
+	ch := make(chan int)
+	go func() {
+		fmt.Println("打印 ch 无缓存")
+		<-ch
+	}()
+	ch <- 1
+}
+
+func orderGoroutine3() {
+	ch := make(chan int, 1)
+	go func() {
+		fmt.Println("打印 ch 有缓存")
+		ch <- 1
+		fmt.Println(1)
+	}()
+	fmt.Println(2)
+	<-ch
+	fmt.Println(3)
+}
+
+// 等待一组事件
+func orderGoroutine4() {
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func() {
+			fmt.Println("打印")
+			wg.Done()
+		}()
+	}
+	wg.Wait()
+}
 
 //endregion
 
