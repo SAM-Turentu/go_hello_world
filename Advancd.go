@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo"
 	"math/rand"
 	"net/http"
+	"reflect"
 	"runtime"
 	"sync"
 	"sync/atomic"
@@ -135,7 +136,7 @@ func AdvanceLearn() {
 	//hungry()
 	//endregion
 
-	//region
+	//region 并发相关
 	//orderGoroutine()
 	//orderGoroutine2()
 	//for i := 0; i < 10; i++ {
@@ -143,7 +144,74 @@ func AdvanceLearn() {
 	//	fmt.Println()
 	//	fmt.Println()
 	//}
-	orderGoroutine4()
+
+	//orderGoroutine4()
+	//endregion
+
+	//region 反射
+	//var a int
+	//var b *int
+	//type c struct{}
+	//var d chan string
+	//typeOfA := reflect.TypeOf(a)
+	//typeOfB := reflect.TypeOf(b)
+	//typeOfC := reflect.TypeOf(c{})
+	//typeOfD := reflect.TypeOf(d)
+	//// Name() 类型名称的字符串
+	//// Kind() 类型归属的种类
+	//fmt.Println(typeOfA.Name(), typeOfA.Kind()) // 'int' int
+	//fmt.Println(typeOfB.Name(), typeOfB.Kind()) // '' ptr
+	//fmt.Println(typeOfC.Name(), typeOfC.Kind()) // 'c' struct
+	//fmt.Println(typeOfD.Name(), typeOfD.Kind()) // '' chan
+	//
+	//type Enum int
+	//const (
+	//	Zero Enum = 0
+	//)
+	//// 获取Zero常量的反射类型对象
+	//typeOfZ := reflect.TypeOf(Zero)
+	//// 显示反射类型对象的名称和种类
+	//fmt.Println(typeOfZ.Name(), typeOfZ.Kind())  // Enum int
+
+	//type cat struct {
+	//	CatName string
+	//	CatAge  int
+	//	CatType int `json:"cat_type" id:"100" desc:"field desc"`
+	//}
+	//ins := &cat{}
+	//// 获取结构体实例的 反射类型对象
+	//typeOfCat := reflect.TypeOf(ins)
+	//// 显示反射类型对象的名称和种类
+	//fmt.Printf("name: '%v' kind: '%v'\n", typeOfCat.Name(), typeOfCat.Kind()) // '', ptr
+	//// 取类型的元素
+	//typeOfCat = typeOfCat.Elem() // 不可以使用一个非指正类型获取它的指针类型
+	//// 显示反射类型对象的名称和种类
+	//fmt.Printf("element name: '%v', element kind: '%v'\n", typeOfCat.Name(), typeOfCat.Kind()) // cat, struct
+	//
+	//// 获取结构体成员名称和种类
+	//smallcat := cat{CatName: "mimi", CatAge: 2, CatType: 1}
+	//typeOfS := reflect.TypeOf(smallcat)
+	//for i := 0; i < typeOfS.NumField(); i++ {
+	//	fieldType := typeOfS.Field(i)
+	//	fmt.Printf("name: '%v', tag: '%v'\n", fieldType.Name, fieldType.Tag)
+	//}
+	//if catType, ok := typeOfCat.FieldByName("CatType"); ok{
+	//	// 从tag中取出需要的tag
+	//	fmt.Println(catType.Tag.Get("json"), catType.Tag.Get("id"))
+	//}
+
+	//反射第一定律：反射可以将 "接口类型变量" 转换为 "反射类型对象"
+	var x float64 = 3.4
+	fmt.Println("value:", reflect.ValueOf(x)) // valueOf 入参是一个接口类型
+
+	//反射第二定律：反射可以将 "反射类型对象" 转换为 "接口类型变量"
+
+	//反射第三定律：如果要修改 "反射类型对象" 其值必须是 "可写的"
+
+	//endregion
+
+	//region
+
 	//endregion
 
 	//region
@@ -245,7 +313,7 @@ func WriteLock(n int, ch chan struct{}) {
 	ch <- struct{}{}
 }
 
-//endregion
+//endregion1
 
 // region 时间和日期
 
@@ -566,7 +634,7 @@ func hungry() {
 
 //endregion
 
-//region
+//region 并发相关
 
 func orderGoroutine() {
 	var mu sync.Mutex // 互斥锁
@@ -610,6 +678,14 @@ func orderGoroutine4() {
 	}
 	wg.Wait()
 }
+
+//endregion
+
+//region
+
+//endregion
+
+//region
 
 //endregion
 
