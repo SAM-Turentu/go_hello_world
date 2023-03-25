@@ -207,7 +207,7 @@ func AdvanceLearn() {
 	//orderGoroutine4()
 	//endregion
 
-	//region 反射
+	//region 反射三大定律
 	//var a int
 	//var b *int
 	//type c struct{}
@@ -260,12 +260,108 @@ func AdvanceLearn() {
 	//}
 
 	//反射第一定律：反射可以将 "接口类型变量" 转换为 "反射类型对象"
-	var x float64 = 3.4
-	fmt.Println("value:", reflect.ValueOf(x)) // valueOf 入参是一个接口类型
+	//var x float64 = 3.4
+	//fmt.Println("value:", reflect.ValueOf(x)) // valueOf 入参是一个接口类型
 
 	//反射第二定律：反射可以将 "反射类型对象" 转换为 "接口类型变量"
 
 	//反射第三定律：如果要修改 "反射类型对象" 其值必须是 "可写的"
+	//var xx float64 =3.4
+	//v := reflect.ValueOf(xx)
+	//// v时不可写的，可写性 时放射类型变量的一个属性，但不是所有反射类型变量都有这个属性
+	////v.SetFloat(7.1)  // panic: reflect: reflect.Value.SetFloat using unaddressable value
+	//fmt.Println("settabillity of v: ", v.CanSet())  // 输出false
+	//
+	//// 指针p指向的数据
+	//fmt.Println("使用指针可以修改 不可写 类型")
+	//p := reflect.ValueOf(&xx)
+	//v = p.Elem()  // Elem 对指针进行 "解引用"
+	//fmt.Println("settabillity of v: ", v.CanSet())
+	//v.SetFloat(7.1)
+	//fmt.Println(v.Interface())
+	//fmt.Println(xx)
+
+	//结构体
+	//reflectStruct()
+	//endregion
+
+	//region 反射之 IsNil IsValid
+	//var a int
+	//valueOfA := reflect.ValueOf(a)
+	//fmt.Println(valueOfA.IsNil())  // 值类型不是通道（channel）、函数、接口、map、指针或 切片时发生 panic
+	//fmt.Println(valueOfA.IsValid())
+
+	//var b *int
+	//
+	//valueOfB := reflect.ValueOf(b)
+	//fmt.Println(valueOfB.IsNil())  // 值类型不是通道（channel）、函数、接口、map、指针或 切片时发生 panic
+	//fmt.Println(valueOfB.IsValid())
+
+	//type T struct {
+	//
+	//}
+	//s := struct {}{}
+	//valueOfT := reflect.ValueOf(&T{})
+	//fmt.Println("T.IsNil", valueOfT.IsNil()) // false
+	//fmt.Println("T.IsValid", valueOfT.IsValid()) // true
+	//
+	//fmt.Println("s method isValid", reflect.ValueOf(s).MethodByName("").IsValid()) // false
+	//endregion
+
+	//region 反射 通过类型信息创建实例
+	//var x int
+	//typeOfX := reflect.TypeOf(x)
+	//xx := reflect.New(typeOfX)
+	//fmt.Println(xx, xx.Type(), xx.Kind())
+
+	//endregion
+
+	//region 通过反射 调用函数（进一步可以实现依赖注入）
+	//funcValue := reflect.ValueOf(add)
+	//// 构造入参
+	//params := []reflect.Value{reflect.ValueOf(10), reflect.ValueOf(2)}
+	////调用函数
+	//ret := funcValue.Call(params)
+	//fmt.Println("通过反射调用函数add 结果为：", ret[0].Int())
+
+	//endregion
+
+	//region 通过反射实现 依赖注入
+
+	//inj := inject.New()
+	//// 实参注入
+	//inj.Map("SAM")
+	//inj.Map(23)
+	//inj.Map("1829200") // 当有两个以上相同类型的变量时，inject.Map 会覆盖前一个参数值，需要使用MapTo
+	//inj.Map(1)
+	////inj.MapTo("公司名", (*S1)(nil))
+	////inj.MapTo("等级", (*S2)(nil))
+	//inj.Invoke(FormatString) // 函数反转调用
+	//
+	//// 可以实现对struct 的注入
+	//type SpecialString interface{}
+	//type injStruct struct {
+	//	Name   string        `inject`
+	//	Gender SpecialString `inject`
+	//	Age    int           `inject`
+	//	Uid    int           `inject`
+	//	Nick   []byte
+	//}
+	//
+	//s := injStruct{}
+	//inj = inject.New()
+	//inj.Map("张三")
+	//inj.MapTo("男", (*SpecialString)(nil))
+	//inj.Map(18)
+	//inj2 := inject.New()
+	//inj2.MapTo(228392, (*int)(nil)) // todo 怎么设置uid？？
+	//inj.SetParent(inj2)
+	//
+	//inj.Apply(&s)
+	//
+	//fmt.Println(s) // {张三 男 18 18 []}
+
+	//inj.Apply(&struct)
 
 	//endregion
 
@@ -275,7 +371,6 @@ func AdvanceLearn() {
 
 	fmt.Println("*************************Advance END*************************")
 }
-
 
 // region web 服务
 func Start() {
@@ -832,6 +927,58 @@ func orderGoroutine4() {
 	}
 	wg.Wait()
 }
+
+//endregion
+
+// region 反射 结构体 可写
+func reflectStruct() {
+	type T struct {
+		A int
+		B string
+		//c string
+	}
+	//t:=T{123, "test", "小写字母c"} // 结构体中只有可导出的字段是“可设置”的
+	t := T{123, "test"}
+	s := reflect.ValueOf(&t).Elem()
+	typeOfT := s.Type()
+	for i := 0; i < s.NumField(); i++ {
+		f := s.Field(i)
+		fmt.Printf("%d: %s %s = %v\n", i, typeOfT.Field(i).Name, f.Type(), f.Interface())
+	}
+	s.Field(0).SetInt(22)
+	fmt.Println("t is now: ", t)
+}
+
+//endregion
+
+// region 通过反射调用函数
+func add(a, b int) int {
+	return a + b
+}
+
+//endregion
+
+//region
+
+type S1 interface{}
+type S2 interface{}
+
+func FormatString(name string, age int, phone string, gender int) {
+	//func FormatString(name string, company S1, level S2, age int)  {
+	genderMap := make(map[int]string)
+	genderMap[1] = "man"
+	genderMap[0] = "woman"
+	genderMap[9] = "Unkonwn"
+	//fmt.Println(genderMap[gender])
+	// 当有两个以上相同类型的变量时，inject.Map 会覆盖前一个参数值，需要使用MapTo
+	fmt.Printf("My name is %s, %d years old, gender: %s, phone: %s\n", name, age, genderMap[gender], phone)
+	//fmt.Printf("My name is %s, %d years old\n", name, age)
+	//fmt.Printf("company %s, leve %s\n", company, level)
+}
+
+//endregion
+
+//region
 
 //endregion
 
