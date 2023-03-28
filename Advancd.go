@@ -1,11 +1,16 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
+	"encoding/gob"
+	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
+	"io"
 	"math/rand"
 	"net/http"
+	"os"
 	"reflect"
 	"runtime"
 	"sync"
@@ -362,6 +367,26 @@ func AdvanceLearn() {
 	//fmt.Println(s) // {张三 男 18 18 []}
 
 	//inj.Apply(&struct)
+
+	//endregion
+
+	//region 读写json
+	//WriteJson()
+	//ReadJson()
+	//endregion
+
+	//region 读写Gob文件
+	//WriteGob()
+	//ReadGob()
+	//endregion
+
+	//region 读写txt
+	//WriteTxt()
+	//ReadTxt()
+	AppendWriterTxt()
+	//endregion
+
+	//region 读写二进制文件
 
 	//endregion
 
@@ -958,7 +983,7 @@ func add(a, b int) int {
 
 //endregion
 
-//region
+//region 依赖注入调用的方法
 
 type S1 interface{}
 type S2 interface{}
@@ -975,6 +1000,149 @@ func FormatString(name string, age int, phone string, gender int) {
 	//fmt.Printf("My name is %s, %d years old\n", name, age)
 	//fmt.Printf("company %s, leve %s\n", company, level)
 }
+
+//endregion
+
+//region json文件读写
+
+type Website struct {
+	Name   string `xml:"name,attr"`
+	Url    string
+	Course []string
+}
+
+func WriteJson() {
+	data := []Website{
+		{"Golang", "http://c.biancheng.net/golang/", []string{"http://c.biancheng.net/cplus/", "http://c.biancheng.net/linux_tutorial/"}},
+		{"Java", "http://c.biancheng.net/java/", []string{"http://c.biancheng.net/socket/", "http://c.biancheng.net/python/"}},
+	}
+
+	filePtr, err := os.Create("data.json") // 创建文件
+	if err != nil {
+		fmt.Println("文件创建失败", err.Error())
+		return
+	}
+	defer filePtr.Close() // 方法释放时关闭文件
+
+	encoder := json.NewEncoder(filePtr)
+
+	err = encoder.Encode(data)
+	if err != nil {
+		fmt.Println("编码错误！", err.Error())
+	} else {
+		fmt.Println("编码成功！")
+	}
+
+}
+
+func ReadJson() {
+	filePrt, err := os.Open("./data.json")
+	if err != nil {
+		fmt.Println("文件打开失败: ", err.Error())
+		return
+	}
+	defer filePrt.Close()
+	var data []Website
+	decoder := json.NewDecoder(filePrt)
+	err = decoder.Decode(&data)
+	if err != nil {
+		fmt.Println("解码失败", err.Error())
+	} else {
+		fmt.Println("解码成功")
+		fmt.Println(data)
+	}
+}
+
+//endregion
+
+//region 读写Gob文件
+
+// 可导出的字段会被编码，零值会被忽略
+func WriteGob() {
+	data := []Website{
+		{"Golang", "http://c.biancheng.net/golang/", []string{"http://c.biancheng.net/cplus/", "http://c.biancheng.net/linux_tutorial/"}},
+		{"Java", "http://c.biancheng.net/java/", []string{"http://c.biancheng.net/socket/", "http://c.biancheng.net/python/"}},
+	}
+	name := "demo.gob"
+	filePrt, err := os.Create(name)
+	if err != nil {
+		fmt.Println("创建gob文件失败：", err.Error())
+		return
+	}
+	defer filePrt.Close()
+	enc := gob.NewEncoder(filePrt)
+	if err := enc.Encode(data); err != nil {
+		fmt.Println(err)
+	}
+
+}
+
+func ReadGob() {
+	var M []Website
+	filePrt, err := os.Open("demo.gob")
+	if err != nil {
+		fmt.Println("gob文件打开失败：", err.Error())
+		return
+	}
+	defer filePrt.Close()
+	data := gob.NewDecoder(filePrt)
+	data.Decode(&M)
+	fmt.Println(M)
+}
+
+//endregion
+
+// region 写纯文本文件 txt
+func WriteTxt() {
+	filename := "text.txt"
+	filePtr, err := os.Create(filename)
+	if err != nil {
+		fmt.Println("文件创建失败：", err.Error())
+		return
+	}
+	defer filePtr.Close()
+	writer := bufio.NewWriter(filePtr)
+	writer.WriteString("文本写入文件") // todo 写文件的追加模式？？
+	// writer 是带缓存的，内容是先写入缓存的，所以需要调用 Flush 方法，将缓存数据写入文件
+	writer.Flush()
+}
+
+func ReadTxt() {
+	filepath := "./text.txt"
+	filePrt, err := os.Open(filepath)
+	if err != nil {
+		fmt.Println("文件打开发生错误：", err.Error())
+		return
+	}
+	defer filePrt.Close()
+	read := bufio.NewReader(filePrt)
+	data, eof := read.ReadString('\n')
+	fmt.Println("data: ", data)
+	if eof == io.EOF {
+		fmt.Println("eof", eof) // 文件的末尾
+	}
+}
+
+// AppendWriterTxt 写文件追加
+func AppendWriterTxt() {
+	filepath := "./text.txt"
+	//r := os.O_APPEND | os.O_RDWR
+	//filePrt, err := os.OpenFile(filepath, r, 0666)
+	filePrt, err := os.OpenFile(filepath, os.O_APPEND|os.O_RDWR, 0666) // 追加模式
+	if err != nil {
+		fmt.Println("发生错误：", err.Error())
+		return
+	}
+	defer filePrt.Close()
+	writer := bufio.NewWriter(filePrt)
+	writer.WriteString("\nI'm fine. And you?\n")
+	writer.Flush()
+
+}
+
+//endregion
+
+//region
 
 //endregion
 
