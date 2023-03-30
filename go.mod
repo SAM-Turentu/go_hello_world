@@ -8,6 +8,7 @@ require (
 )
 
 require (
+	github.com/SAM-Turentu/go_hello_world v0.0.0-20230206123723-7d3efe3ed9a3 // indirect
 	github.com/labstack/gommon v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
